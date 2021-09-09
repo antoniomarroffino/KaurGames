@@ -1,0 +1,174 @@
+body {
+    background-image: url('../../img/sfondo.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.titolo{
+    font-size: 4vw;
+}
+
+
+td {
+    background: rgb(148, 148, 148);
+    border: 3px solid rgb(88, 88, 88);
+    height: 80px;
+    width: 80px;
+    text-align: center;
+    box-shadow: 1px 1px 0.5px darkgray;
+    margin: 1px;
+}
+
+td:hover {
+    background-color: rgb(118, 118, 118);
+}
+
+td:active {
+    background-color: rgb(98, 98, 98);
+}
+
+#bottone-gioca {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.0em;
+    width: 300px;
+    height: 100px;
+}
+
+#bottone-tornaAlMenù,
+#bottone-rigioca {
+    width: 300px;
+    height: 100px;
+}
+
+
+
+/*  */
+
+button {
+    color: rgb(169, 198, 223);
+    background-color: rgb(218, 218, 218);
+    text-align: center;
+    border-radius: 8px;
+    padding: 1px 12px;
+    font-family: "Comic Sans MS";
+    font-weight: bold;
+    border-color: rgb(51, 51, 51);
+}
+
+button:hover {
+    background-color: gray;
+}
+
+#box-1 {
+    display: flex;
+    justify-content: center;
+    order: 1;
+    flex-direction: column;
+}
+
+#box-2, #tabellaGioco {
+    order: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#box-3 {
+    justify-content: center;
+    color: aliceblue;
+    font-size: 2em;
+    order: 3;
+    visibility: hidden;
+    width: 300px;
+}
+
+.bottone-menù {
+    display: flex;
+    font-size: xx-large;
+    padding: 30px;
+}
+/*
+#bottone-facile,
+#bottone-normale,
+#bottone-difficile {
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    border-radius: 8px;
+    padding: 1px 12px;
+    font-family: "Comic Sans MS";
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.facile {
+    height: 50px;
+    width: 50px;
+    font-size: x-large;
+}
+
+.normale {
+    height: 40px;
+    width: 40px;
+    font-size: large;
+}
+
+.difficile {
+    height: 30px;
+    width: 30px;
+    font-size: medium;
+}
+
+#vittoria-sconfitta {
+    border-radius: 8px;
+    font-family: "Comic Sans MS";
+    font-size: 3.0em;
+}
+
+#menù-container {
+    display: flex;
+    height: 300px;
+}
+
+#row-2 {
+    padding-top: 50px;
+}
+
+#row-3 {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+#name {
+    font-size: x-large;
+    text-align: center;
+}
+
+.mina {
+    width: 20px;
+    height: 20px;
+}
+
+.menu-scelta {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+}
+
+#container {
+    justify-content: center;
+}
+
+#bottone-tornaAlMenù,
+#bottone-rigioca {
+    width: 300px;
+    height: 100px;
+}
+ */
