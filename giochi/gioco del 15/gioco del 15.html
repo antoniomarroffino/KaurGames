@@ -1,0 +1,86 @@
+<!-- Martucci Flavio 4inf3 -->
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gioco del 15</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Gioco del 15</title>
+    <style>
+        body {
+            background-image: url('../../img/sfondo.gif');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        td {
+            background: rgb(148, 148, 148);
+            border: 3px solid rgb(88, 88, 88);
+            height: 80px;
+            width: 80px;
+            text-align: center;
+            box-shadow: 1px 1px 0.5px darkgray;
+            margin: 1px;
+        }
+        
+        td:hover {
+            background-color: rgb(118, 118, 118);
+        }
+        
+        td:active {
+            background-color: rgb(98, 98, 98);
+        }
+    </style>
+    <script src="gioco del 15.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../../index.html">
+                <img src="../../img/logo.png" alt="" width="30" height="30" class="d-inline-block align-top"> KaurGames
+            </a>
+            <h2 class="navbar-brand" style="font-size: 30px;">
+                GIOCO DEL 15
+            </h2>
+        </div>
+    </nav>
+    <h1 id="titolo">Gioco del 15</h1>
+    <h2 id="titolo3">(Il gioco consiste nell'ordinare le caselle dal 1 al 15)</h2>
+    <h2 id="titolo2"></h2>
+
+    <div id="tempoTrascorso"></div>
+    <div id="tabellaGioco"></div>
+
+    <button id="bottoneNuovaPartita" onclick="gioco.creaTabellaGioco()">NUOVA PARTITA</button>
+
+    <script>
+        document.getElementsByTagName("html")[0].style = "font-family: Arial, Helvetica, sans-serif;"
+        document.getElementById("titolo").style.textAlign = "center";
+        document.getElementById("titolo").style.marginTop = "30px";
+        document.getElementById("titolo").style.fontSize = "40px";
+        document.getElementById("titolo2").style.textAlign = "center";
+        document.getElementById("titolo3").style.textAlign = "center";
+
+        document.getElementById("bottoneNuovaPartita").style = "display: block; margin: 0px auto;";
+
+        document.getElementById("tempoTrascorso").style.fontSize = "20px";
+        document.getElementById("tempoTrascorso").style.textAlign = "center";
+
+        let gioco = new Gioco15();
+
+        gioco.schermataIniziale();
+    </script>
+
+
+</body>
+
+</html>
