@@ -1,4 +1,3 @@
-// Martucci Flavio - flavio.martucci.fm@gmail.com
 
 function Forza4() {
     let matrice = [             // 0 cella vuota, 1 giocatore1, 2 giocatore2
@@ -20,6 +19,15 @@ function Forza4() {
 
 
     this.creaTabellaGioco = function () {
+        matrice = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0]
+        ];
+        utenteCorrente = 1;
         let strTab = "<table>";
         let numCella = 0;
         for (let r = 0; r < numeroRighe; r++) {
@@ -31,18 +39,30 @@ function Forza4() {
             strTab += "</tr>";
         }
         strTab += "</table>";
-        document.getElementById("contenitoreGioco").innerHTML += "<div id='schermoInfoPartita'><h2><br></h2></div>"
+        // document.getElementById("contenitoreGioco").innerHTML += "<div id='schermoInfoPartita'><h2><br></h2></div>"
         document.getElementById("contenitoreGioco").innerHTML += `<div id="divGioco">${strTab}</div>`;
         assegnaOnclickCelle();
         stringaGiocatoreCorrente();
+        partitaInCorso = true;
+        // this.mostraCelle();
     }
 
     let stringaGiocatoreCorrente = function () {
-        let colore;
-        if (utenteCorrente == 1) colore = "red";
-        else colore = "yellow";
-        document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].innerHTML = `Turno del giocatore ${utenteCorrente}`;
-        document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].style = `color: ${colore}`;
+        // let colore;
+        let coloreAvviso;
+        if (utenteCorrente == 1){
+            // colore = "red";
+            coloreAvviso = "alert-danger";
+        } 
+        else {
+            // colore = "yellow";
+            coloreAvviso = "alert-warning";
+        }
+        // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].innerHTML = `Turno del giocatore ${utenteCorrente}`;
+        document.getElementById("row-3").innerHTML = `<div class="alert ${coloreAvviso}" id="vittoria-sconfitta">` +
+        `<strong>Turno del giocatore ${utenteCorrente}</strong>` +
+        '</div>';
+        // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].style = `color: ${colore}`;
     }
 
     let controllaCellaCliccata = function (cellaCliccata) {
@@ -190,13 +210,23 @@ function Forza4() {
 
     let confrontaPedine = function (r, c) {
         if (matrice[r][c] == utenteCorrente) {
-            // console.log("Riga= " + r + ", Colonna= " + c);
             contatoreSerieUguali += 1;
-            // console.log(contatoreSerieUguali);
             if (contatoreSerieUguali == 4) {
-                // console.log(`${utenteCorrente} ha vinto la partita!`);
-                document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].innerHTML = `Ha vinto il giocatore ${utenteCorrente}!`;
-                // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].style = `color: ${colore}`;
+                let colore;
+                if (utenteCorrente == 1){
+                    colore = "rosso";
+                } 
+                else {
+                    colore = "giallo";
+                }
+                // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].innerHTML = `Turno del giocatore ${utenteCorrente}`;
+                
+                document.getElementById("row-3").innerHTML = `<div class="alert alert-success" id="vittoria-sconfitta">` +
+                `<strong>Ha vinto il giocatore ${utenteCorrente} (${colore})</strong>` +
+                '</div>';
+                document.getElementById("vittoria-sconfitta").style.fontSize = "3.0em";
+
+                // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].innerHTML = `Ha vinto il giocatore ${utenteCorrente}!`;
                 partitaInCorso = false;
             }
             return true;
@@ -211,5 +241,58 @@ function Forza4() {
 
 }
 
+function crea() {
+    document.getElementsByTagName("body")[0].innerHTML += '<div class="container text-center my-5 titolo">' +
+        '1 2 2 FORZA 2 QUATTRO 2 2 9' +
+        '</div>';
+    creaScheletro();
 
+}
+
+function creaScheletro() {
+    document.getElementsByTagName("body")[0].innerHTML +=
+        '<div class="container-fluid" id="container">' +
+        '<div class="row" id="row-2">' +
+        '<div class="col-md-3" id="box-1">' +
+        '</div>' +
+        // '<div class="col-md-6" id="box-2">' +
+        '<div class="col-md-6" id="box-2"><div id="contenitoreGioco"></div>' +
+        '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
+        '</div>' +
+        '<div class="col-3 alert alert-secondary" id="box-3">' +
+        '<div id="box-3-modalità">' +
+        '</div>' +
+        '<div id="box-3-numeroMine">' +
+        '</div>' +
+        // '<div id="box-3-caselleRimanenti">' +
+        // '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row" id="row-3">' +
+        '</div>';
+}
+
+function gioca() {
+    document.getElementsByTagName("div")[1].remove();
+    start();
+}
+
+function start() {
+    document.getElementById("bottone-gioca").style.display = 'none';
+    document.getElementById("bottone-gioca").style.visibility = "hidden";
+
+    // document.getElementById("box-3").style.visibility = "visible";
+    // gioco.mosseEffettuate = 0;
+    // document.getElementById("box-3-mosseEffettuate").innerHTML = `<strong>Mosse effettuate: </strong>${forza4.mosseEffettuate}`;
+
+    forza4.creaTabellaGioco();
+    document.getElementById("box-1").innerHTML = '<div class="bottone-menù" onclick="tornaAlMenu()">' +
+        '<button id="bottone-tornaAlMenù">TORNA AL MENU</button>' +
+        '</div>';
+}
+
+function tornaAlMenu() {
+    document.getElementById("container").remove();
+    crea();
+}
 
