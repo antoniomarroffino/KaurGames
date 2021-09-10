@@ -11,24 +11,50 @@ body {
     font-size: 4vw;
 }
 
+#tabellaGioco {
+    /* padding: 30px; */
+    font: bold 22px arial,serif;
+    border: 2px solid rgb(88,88,88);
+    border-radius: 6px;
+    padding: 4px;
+    background-color: #5c646b;
+    border-top: 5px solid rgb(114, 122, 131);
+    border-left: 5px solid rgb(114, 122, 131);
+    border-right: 5px solid rgb(44, 50, 56);
+    border-bottom: 5px solid rgb(44, 50, 56);
+    border-collapse: separate;
+}
+
+table {
+    border-collapse: separate;
+}
 
 td {
-    background: rgb(148, 148, 148);
-    border: 3px solid rgb(88, 88, 88);
+    border-top: 3px solid rgb(193, 220, 243);
+    border-left: 3px solid rgb(193, 220, 243);
+    border-right: 3px solid rgb(99, 121, 139);
+    border-bottom: 3px solid rgb(99, 121, 139);
+    /* background: rgb(148, 148, 148); */
+    background: rgb(169, 198, 223);
+    /* border: 2px solid rgb(88, 88, 88); */
+    border-radius: 5px;
     height: 80px;
     width: 80px;
     text-align: center;
-    box-shadow: 1px 1px 0.5px darkgray;
-    margin: 1px;
+    box-shadow: 1px 1px 1px darkgray;
 }
 
-td:hover {
-    background-color: rgb(118, 118, 118);
+ td:hover {
+    /* background-color: gray; */
+    border-top: 3px solid rgb(114, 122, 131);
+    border-left: 3px solid rgb(114, 122, 131);
+    border-right: 3px solid rgb(44, 50, 56);
+    border-bottom: 3px solid rgb(44, 50, 56);
 }
-
+/*
 td:active {
-    background-color: rgb(98, 98, 98);
-}
+    background-color: rgb(102, 102, 102);
+} */
 
 #bottone-gioca {
     display: flex;
@@ -37,6 +63,10 @@ td:active {
     font-size: 4.0em;
     width: 300px;
     height: 100px;
+}
+
+#container {
+    justify-content: center;
 }
 
 #bottone-tornaAlMenù,
@@ -71,7 +101,7 @@ button:hover {
     flex-direction: column;
 }
 
-#box-2, #tabellaGioco {
+#box-2 {
     order: 2;
     display: flex;
     justify-content: center;
@@ -165,13 +195,4 @@ button:hover {
     height: auto;
 }
 
-#container {
-    justify-content: center;
-}
-
-#bottone-tornaAlMenù,
-#bottone-rigioca {
-    width: 300px;
-    height: 100px;
-}
  */

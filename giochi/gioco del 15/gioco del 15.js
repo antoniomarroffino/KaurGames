@@ -34,13 +34,13 @@ function Gioco15() {
     }
 
     this.stileTabella = function () {  // imposta gli stili della tabella
-        document.getElementById("tabellaGioco").align = "center";
-        document.getElementById("tabellaGioco").style.padding = "30px";
-        document.getElementById("tabellaGioco").style.font = "bold 22px arial,serif";
+        // document.getElementById("tabellaGioco").align = "center";
+        // document.getElementById("tabellaGioco").style.padding = "30px";
+        // document.getElementById("tabellaGioco").style.font = "bold 22px arial,serif";
 
         let tabella = document.getElementById("tabellaGioco").getElementsByTagName("table")[0];
-        tabella.style.margin = "10px";
-        tabella.style.border = "10px solid rgb(88,88,88)";
+        // tabella.style.margin = "10px";
+        // tabella.style.border = "10px solid rgb(88,88,88)";
         let elencoCelleTabella = document.getElementById("tabellaGioco").getElementsByTagName("td");
         for (let i = 0; i < dimensioneTabella ** 2; i++) {
             elencoCelleTabella[i].onclick = function () {
@@ -224,7 +224,8 @@ function creaScheletro() {
         '<div class="col-md-3" id="box-1">' +
         '</div>' +
         // '<div class="col-md-6" id="box-2">' +
-        '<div class="col-md-6" id="tabellaGioco">' +
+        '<div class="col-md-6" id="box-2"><div id="tabellaGioco"></div>' +
+        // '<div class="col-md-6" id="tabellaGioco">' +
         '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
         '</div>' +
         '<div class="col-3 alert alert-secondary" id="box-3">' +
@@ -261,6 +262,7 @@ function start() {
 
 function tornaAlMenu() {
     document.getElementById("container").remove();
+    clearInterval(gioco.timeId);
     crea();
 }
 
