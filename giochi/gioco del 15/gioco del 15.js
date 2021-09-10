@@ -11,10 +11,6 @@ function Gioco15() {
     let dimensioneTabella = 4;
     this.mosseEffettuate;
 
-    // this.schermataIniziale = function () {  // mostra la schermata iniziale prima di avviare la partita
-    //     document.getElementById("titolo2").innerHTML = "Premi il bottone per iniziare una nuova partita";
-    // }
-
     this.creaTabellaGioco = function () {   // crea la tabella html per il gioco
         let strTab = "<table>";
         for (let r = 0; r < dimensioneTabella; r++) {
@@ -34,10 +30,6 @@ function Gioco15() {
     }
 
     this.stileTabella = function () {  // imposta gli stili della tabella
-        // document.getElementById("tabellaGioco").align = "center";
-        // document.getElementById("tabellaGioco").style.padding = "30px";
-        // document.getElementById("tabellaGioco").style.font = "bold 22px arial,serif";
-
         let tabella = document.getElementById("tabellaGioco").getElementsByTagName("table")[0];
         // tabella.style.margin = "10px";
         // tabella.style.border = "10px solid rgb(88,88,88)";
@@ -71,12 +63,12 @@ function Gioco15() {
             matriceCaselle[r2][c2] = temp;
         }
 
-        matriceCaselle = [
-            [1, 2, 3, 4],
-            [5, 6, 7, 8],
-            [9, 10, 11, 12],
-            [13, 14, 0, 15]
-        ];
+        // matriceCaselle = [   // solo per test
+        //     [1, 2, 3, 4],
+        //     [5, 6, 7, 8],
+        //     [9, 10, 11, 12],
+        //     [13, 14, 0, 15]
+        // ];
         
         this.assegnaId();  // assegna l'id dalla matrice alle celle
         this.testoCellaDaId();   // inserisce nella tabella l'id come testo

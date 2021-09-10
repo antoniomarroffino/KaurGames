@@ -12,6 +12,8 @@ function Forza4() {
     let numeroColonne = 7;
     let utenteCorrente = 1;
     let partitaInCorso = true;
+    let timeId;
+    let secondiTrascorsi = 0;
 
     this.creaTabellaGioco = function () {
         matrice = [
@@ -23,6 +25,7 @@ function Forza4() {
             [0, 0, 0, 0, 0, 0, 0]
         ];
         utenteCorrente = 1;
+        secondiTrascorsi = 0;
         let strTab = "<table>";
         let numCella = 0;
         for (let r = 0; r < numeroRighe; r++) {
@@ -38,7 +41,14 @@ function Forza4() {
         assegnaOnclickCelle();
         stringaGiocatoreCorrente();
         partitaInCorso = true;
+        clearInterval(timeId);
+        timeId = setInterval(mostraTempoTrascorso, 1000);
         this.mostraCelle();
+    }
+
+    let mostraTempoTrascorso = function () {
+        document.getElementById("box-3-tempoTrascorso").innerHTML = `<strong>Tempo trascorso: </strong>${secondiTrascorsi} secondi`;
+        secondiTrascorsi++;
     }
 
     let stringaGiocatoreCorrente = function () {
@@ -70,7 +80,6 @@ function Forza4() {
                 // mostraCella(numeroCellaCliccata, rigaCellaCliccata, colonnaCellaCliccata);
                 forza4.mostraCelle();
                 controllaPossibiliVincite();
-                // controllare se sono disponibili posti per altre pedine
                 
                 if (partitaInCorso) {
                     if (presentiCaselleLibere() == true) {
@@ -85,6 +94,7 @@ function Forza4() {
                     
                 }
                 if (partitaInCorso == false) {
+                    clearInterval(timeId);
                     creaTastoRigioca();
                 }
             }
@@ -251,6 +261,10 @@ function Forza4() {
         return false;
     }
 
+    this.azzeraTimeId = function () {
+        clearInterval(timeId);
+    }
+
 
 
 
@@ -276,11 +290,9 @@ function creaScheletro() {
         '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
         '</div>' +
         '<div class="col-3 alert alert-secondary" id="box-3">' +
-        '<div id="box-3-modalità">' +
+        '<div id="box-3-tempoTrascorso">' +
         '</div>' +
-        '<div id="box-3-numeroMine">' +
-        '</div>' +
-        // '<div id="box-3-caselleRimanenti">' +
+        // '<div id="box-3-numeroMine">' +
         // '</div>' +
         '</div>' +
         '</div>' +
@@ -297,9 +309,8 @@ function start() {
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
 
-    // document.getElementById("box-3").style.visibility = "visible";
-    // gioco.mosseEffettuate = 0;
-    // document.getElementById("box-3-mosseEffettuate").innerHTML = `<strong>Mosse effettuate: </strong>${forza4.mosseEffettuate}`;
+    document.getElementById("box-3").style.visibility = "visible";
+    document.getElementById("box-3-tempoTrascorso").innerHTML = `<strong>Tempo trascorso: </strong>0 secondi`;
 
     forza4.creaTabellaGioco();
     document.getElementById("box-1").innerHTML = '<div class="bottone-menù" onclick="tornaAlMenu()">' +
@@ -309,6 +320,7 @@ function start() {
 
 function tornaAlMenu() {
     document.getElementById("container").remove();
+    forza4.azzeraTimeId();
     crea();
 }
 
