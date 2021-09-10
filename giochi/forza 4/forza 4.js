@@ -13,11 +13,6 @@ function Forza4() {
     let utenteCorrente = 1;
     let partitaInCorso = true;
 
-    // this.menuIniziale = function () {       // mostra il menu principale per l'avvio del gioco
-
-    // }
-
-
     this.creaTabellaGioco = function () {
         matrice = [
             [0, 0, 0, 0, 0, 0, 0],
@@ -39,30 +34,27 @@ function Forza4() {
             strTab += "</tr>";
         }
         strTab += "</table>";
-        // document.getElementById("contenitoreGioco").innerHTML += "<div id='schermoInfoPartita'><h2><br></h2></div>"
         document.getElementById("contenitoreGioco").innerHTML += `<div id="divGioco">${strTab}</div>`;
         assegnaOnclickCelle();
         stringaGiocatoreCorrente();
         partitaInCorso = true;
-        // this.mostraCelle();
+        this.mostraCelle();
     }
 
     let stringaGiocatoreCorrente = function () {
         // let colore;
         let coloreAvviso;
-        if (utenteCorrente == 1){
+        if (utenteCorrente == 1) {
             // colore = "red";
             coloreAvviso = "alert-danger";
-        } 
+        }
         else {
             // colore = "yellow";
             coloreAvviso = "alert-warning";
         }
-        // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].innerHTML = `Turno del giocatore ${utenteCorrente}`;
         document.getElementById("row-3").innerHTML = `<div class="alert ${coloreAvviso}" id="vittoria-sconfitta">` +
-        `<strong>Turno del giocatore ${utenteCorrente}</strong>` +
-        '</div>';
-        // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].style = `color: ${colore}`;
+            `<strong>Turno del giocatore ${utenteCorrente}</strong>` +
+            '</div>';
     }
 
     let controllaCellaCliccata = function (cellaCliccata) {
@@ -78,8 +70,23 @@ function Forza4() {
                 // mostraCella(numeroCellaCliccata, rigaCellaCliccata, colonnaCellaCliccata);
                 forza4.mostraCelle();
                 controllaPossibiliVincite();
-                if (partitaInCorso)
-                    utenteSuccessivo();
+                // controllare se sono disponibili posti per altre pedine
+                
+                if (partitaInCorso) {
+                    if (presentiCaselleLibere() == true) {
+                        utenteSuccessivo();
+                    }
+                    else {
+                        document.getElementById("row-3").innerHTML = `<div class="alert alert-secondary" id="vittoria-sconfitta">` +
+                        `<strong>Pareggio!</strong>` +
+                        '</div>';
+                        partitaInCorso = false;
+                    }
+                    
+                }
+                if (partitaInCorso == false) {
+                    creaTastoRigioca();
+                }
             }
         }
 
@@ -213,21 +220,19 @@ function Forza4() {
             contatoreSerieUguali += 1;
             if (contatoreSerieUguali == 4) {
                 let colore;
-                if (utenteCorrente == 1){
+                if (utenteCorrente == 1) {
                     colore = "rosso";
-                } 
+                }
                 else {
                     colore = "giallo";
                 }
-                // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].innerHTML = `Turno del giocatore ${utenteCorrente}`;
-                
                 document.getElementById("row-3").innerHTML = `<div class="alert alert-success" id="vittoria-sconfitta">` +
-                `<strong>Ha vinto il giocatore ${utenteCorrente} (${colore})</strong>` +
-                '</div>';
+                    `<strong>Ha vinto il giocatore ${utenteCorrente}! (${colore})</strong>` +
+                    '</div>';
                 document.getElementById("vittoria-sconfitta").style.fontSize = "3.0em";
 
-                // document.getElementById("schermoInfoPartita").getElementsByTagName("h2")[0].innerHTML = `Ha vinto il giocatore ${utenteCorrente}!`;
                 partitaInCorso = false;
+                // creaTastoRigioca();
             }
             return true;
         }
@@ -236,6 +241,17 @@ function Forza4() {
             return false;
         }
     }
+
+    let presentiCaselleLibere = function () {
+        for (let r = 0; r < numeroRighe; r++) {
+            for (let c = 0; c < numeroColonne; c++) {
+                if (matrice[r][c] == 0) return true;
+            }
+        }
+        return false;
+    }
+
+
 
 
 
@@ -296,3 +312,14 @@ function tornaAlMenu() {
     crea();
 }
 
+function creaTastoRigioca() {
+    document.getElementById("box-1").innerHTML += '<div class="bottone-menù" onclick="rigioca()">' +
+        '<button id="bottone-rigioca">RIGIOCA</button>' +
+        '</div>';
+}
+
+function rigioca() {
+    document.getElementById("container").remove();
+    creaScheletro();
+    start();
+}
