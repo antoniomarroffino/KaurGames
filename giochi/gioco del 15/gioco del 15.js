@@ -1,6 +1,6 @@
 
 function Gioco15() {
-    this.matriceCaselle = [
+    let matriceCaselle = [
         [1, 2, 3, 4],
         [5, 6, 7, 8],
         [9, 10, 11, 12],
@@ -66,10 +66,18 @@ function Gioco15() {
             r2 = Math.floor(Math.random() * dimensioneTabella);
             c1 = Math.floor(Math.random() * dimensioneTabella);
             c2 = Math.floor(Math.random() * dimensioneTabella);
-            temp = this.matriceCaselle[r1][c1];
-            this.matriceCaselle[r1][c1] = this.matriceCaselle[r2][c2];
-            this.matriceCaselle[r2][c2] = temp;
+            temp = matriceCaselle[r1][c1];
+            matriceCaselle[r1][c1] = matriceCaselle[r2][c2];
+            matriceCaselle[r2][c2] = temp;
         }
+
+        matriceCaselle = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 0, 15]
+        ];
+        
         this.assegnaId();  // assegna l'id dalla matrice alle celle
         this.testoCellaDaId();   // inserisce nella tabella l'id come testo
         this.secondiTrascorsi = 0;   // resetta i valori per iniziare una nuova partita
@@ -92,15 +100,30 @@ function Gioco15() {
             [13, 14, 15, 0]
         ];
         if (this.confrontaMatrici(matriceCorretta)) {
-            // document.getElementById("titolo2").innerHTML = `Complimenti! Hai completato il gioco in ${this.secondiTrascorsi} secondi e ${this.mosseEffettuate} mosse`;
+            document.getElementById("row-3").innerHTML = '<div class="alert alert-success" id="vittoria-sconfitta">' +
+                `<strong>Complimenti! Hai completato il gioco in ${this.secondiTrascorsi} secondi e ${this.mosseEffettuate} mosse</strong>` +
+                '</div>';
             clearInterval(this.timeId);
+            this.togliOnClick();
+            creaTastoRigioca();
         }
     }
+    this.togliOnClick = function () {
+        var cont = 0;
+        let elencoCelleTabella = document.getElementById("tabellaGioco").getElementsByTagName("td");
+        for (var i = 0; i < dimensioneTabella; i++)
+            for (var k = 0; k < dimensioneTabella; k++) {
+                // document.getElementById(cont).removeAttribute("onclick");
+                elencoCelleTabella[cont].onclick = null;
+                cont++;
+            }
+    }
+    
 
     this.confrontaMatrici = function (matriceCorretta) {    // controlla se la matrice corrente corrisponda a quella della vincita
         for (let i = 0; i < dimensioneTabella; i++) {
             for (let j = 0; j < dimensioneTabella; j++) {
-                if (matriceCorretta[i][j] != this.matriceCaselle[i][j])
+                if (matriceCorretta[i][j] != matriceCaselle[i][j])
                     return false;
             }
         }
@@ -112,7 +135,7 @@ function Gioco15() {
         let i = 0;
         for (let r = 0; r < dimensioneTabella; r++) {
             for (let c = 0; c < dimensioneTabella; c++) {
-                elencoCelleTabella[i].id = this.matriceCaselle[r][c];
+                elencoCelleTabella[i].id = matriceCaselle[r][c];
                 i++;
             }
         }
@@ -122,20 +145,21 @@ function Gioco15() {
         var rCellaVuota, cCellaVuota, rCellaScelta, cCellaScelta;
         for (let r = 0; r < dimensioneTabella; r++) {
             for (let c = 0; c < dimensioneTabella; c++) {
-                if (this.matriceCaselle[r][c] == 0) {    // trova la posizione della cella vuota nella matrice
+                if (matriceCaselle[r][c] == 0) {    // trova la posizione della cella vuota nella matrice
                     rCellaVuota = r;
                     cCellaVuota = c;
                 }
-                if (this.matriceCaselle[r][c] == casella.id) {   // trova la posizione nella matrice della cella premuta
+                if (matriceCaselle[r][c] == casella.id) {   // trova la posizione nella matrice della cella premuta
                     rCellaScelta = r;
                     cCellaScelta = c;
                 }
             }
         }
-        let temp = this.matriceCaselle[rCellaVuota][cCellaVuota];
-        this.matriceCaselle[rCellaVuota][cCellaVuota] = this.matriceCaselle[rCellaScelta][cCellaScelta];
-        this.matriceCaselle[rCellaScelta][cCellaScelta] = temp;
+        let temp = matriceCaselle[rCellaVuota][cCellaVuota];
+        matriceCaselle[rCellaVuota][cCellaVuota] = matriceCaselle[rCellaScelta][cCellaScelta];
+        matriceCaselle[rCellaScelta][cCellaScelta] = temp;
         this.mosseEffettuate++;
+        document.getElementById("box-3-mosseEffettuate").innerHTML = `<strong>Mosse effettuate: </strong>${gioco.mosseEffettuate}`;
         this.controllaVincita(); // controlla se è stato completato correttamente
     }
 
@@ -143,11 +167,11 @@ function Gioco15() {
         var rCellaVuota, cCellaVuota, rCellaScelta, cCellaScelta;
         for (let r = 0; r < dimensioneTabella; r++) {
             for (let c = 0; c < dimensioneTabella; c++) {
-                if (this.matriceCaselle[r][c] == 0) {
+                if (matriceCaselle[r][c] == 0) {
                     rCellaVuota = r;
                     cCellaVuota = c;
                 }
-                if (this.matriceCaselle[r][c] == casella.id) {
+                if (matriceCaselle[r][c] == casella.id) {
                     rCellaScelta = r;
                     cCellaScelta = c;
                 }
@@ -208,10 +232,8 @@ function creaScheletro() {
         // '</div>' +
         '<div id="box-3-tempoTrascorso">' +
         '</div>' +
-        // '<div id="box-3-numeroMine">' +
-        // '</div>' +
-        // '<div id="box-3-caselleRimanenti">' +
-        // '</div>' +
+        '<div id="box-3-mosseEffettuate">' +
+        '</div>' +
         '</div>' +
         '</div>' +
         '<div class="row" id="row-3">' +
@@ -220,11 +242,16 @@ function creaScheletro() {
 
 function gioca() {
     document.getElementsByTagName("div")[1].remove();
+    start();
+}
 
+function start() {
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
 
     document.getElementById("box-3").style.visibility = "visible";
+    gioco.mosseEffettuate = 0;
+    document.getElementById("box-3-mosseEffettuate").innerHTML = `<strong>Mosse effettuate: </strong>${gioco.mosseEffettuate}`;
 
     gioco.creaTabellaGioco();
     document.getElementById("box-1").innerHTML = '<div class="bottone-menù" onclick="tornaAlMenu()">' +
@@ -235,4 +262,16 @@ function gioca() {
 function tornaAlMenu() {
     document.getElementById("container").remove();
     crea();
+}
+
+function creaTastoRigioca() {
+    document.getElementById("box-1").innerHTML += '<div class="bottone-menù" onclick="rigioca()">' +
+        '<button id="bottone-rigioca">RIGIOCA</button>' +
+        '</div>';
+}
+
+function rigioca() {
+    document.getElementById("container").remove();
+    creaScheletro();
+    start();
 }
