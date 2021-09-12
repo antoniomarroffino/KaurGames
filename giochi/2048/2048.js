@@ -23,6 +23,8 @@ function Gioco2048() {
     let dimensioneMatrice = 4;
     let spostamentoValido = false;
     let giocoInCorso;
+    let timeId;
+    let secondiTrascorsi;
 
     this.creaTabella = function () {
         matrice = [
@@ -32,6 +34,7 @@ function Gioco2048() {
             [0, 0, 0, 0]
         ];
         giocoInCorso = true;
+        secondiTrascorsi = 0;
         let strTab = "<table id='tabellaGioco'>";
         var cont = 0;
         for (let r = 0; r < dimensioneMatrice; r++) {
@@ -45,8 +48,15 @@ function Gioco2048() {
         strTab += "</table>";
         document.getElementById("divgioco").innerHTML = strTab;
         this.mostraMatrice();
+        clearInterval(timeId);
+        timeId = setInterval(mostraTempoTrascorso, 1000);
         this.generaNumero();
         this.generaNumero();
+    }
+
+    let mostraTempoTrascorso = function () {
+        document.getElementById("box-3-tempoTrascorso").innerHTML = `<strong>Tempo trascorso: </strong>${secondiTrascorsi} secondi`;
+        secondiTrascorsi++;
     }
 
     this.mostraMatrice = function () {
@@ -242,6 +252,7 @@ function Gioco2048() {
                         `<strong>Complimenti! Hai vinto!</strong>` +
                         '</div>';
                     creaTastoRigioca();
+                    clearInterval(timeId);
                     return 0;
                 }
             }
@@ -252,8 +263,8 @@ function Gioco2048() {
                 `<strong>Hai perso! Ritenta!</strong>` +
                 '</div>';
             creaTastoRigioca();
+            clearInterval(timeId);
         }
-
     }
     let controllaSePossibiliMosse = function () {
         if (matricePiena() == true) {
@@ -289,7 +300,9 @@ function Gioco2048() {
     }
 
 
-
+    this.azzeraTimeId = function () {
+        clearInterval(timeId);
+    }
 
 
 }
@@ -376,8 +389,8 @@ function start() {
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
 
-    // document.getElementById("box-3").style.visibility = "visible";
-    // document.getElementById("box-3-tempoTrascorso").innerHTML = `<strong>Tempo trascorso: </strong>0 secondi`;
+    document.getElementById("box-3").style.visibility = "visible";
+    document.getElementById("box-3-tempoTrascorso").innerHTML = `<strong>Tempo trascorso: </strong>0 secondi`;
 
     gioco2048.creaTabella();
     document.getElementById("box-1").innerHTML = '<div class="bottone-menù" onclick="tornaAlMenu()">' +
@@ -387,7 +400,7 @@ function start() {
 
 function tornaAlMenu() {
     document.getElementById("container").remove();
-    // forza4.azzeraTimeId();
+    gioco2048.azzeraTimeId();
     crea();
 }
 
