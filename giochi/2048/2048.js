@@ -33,6 +33,12 @@ function Gioco2048() {
             [0, 0, 0, 0],
             [0, 0, 0, 0]
         ];
+        matriceTempCelleSommate = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ];    
         giocoInCorso = true;
         secondiTrascorsi = 0;
         puntiOttenuti = 0;
@@ -73,7 +79,13 @@ function Gioco2048() {
                 if (matrice[r][c] == 0) {
                     celleTabella[cont].innerHTML = "";
                 } else {
-                    celleTabella[cont].innerHTML = matrice[r][c];
+                    // celleTabella[cont].innerHTML = matrice[r][c];
+                    celleTabella[cont].innerHTML = `<div class="divCella">${matrice[r][c]}</div>`;
+                    if (matriceTempCelleSommate[r][c] == 1) {
+                        // celleTabella[cont].className += " cellaSomma";
+                        // celleTabella[cont].innerHTML = `<div class="cellaSomma">${matrice[r][c]}</div>`;
+                        celleTabella[cont].innerHTML = `<div class="divCella"><div class="cellaSomma">${matrice[r][c]}</div></div>`;
+                    }
                 }
                 cont++;
             }
