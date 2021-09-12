@@ -22,6 +22,7 @@ function Gioco2048() {
     let puntiOttenuti;
     let dimensioneMatrice = 4;
     let spostamentoValido = false;
+    let giocoInCorso;
 
     this.creaTabella = function () {
         matrice = [
@@ -30,6 +31,7 @@ function Gioco2048() {
             [0, 0, 0, 0],
             [0, 0, 0, 0]
         ];
+        giocoInCorso = true;
         let strTab = "<table id='tabellaGioco'>";
         var cont = 0;
         for (let r = 0; r < dimensioneMatrice; r++) {
@@ -230,26 +232,36 @@ function Gioco2048() {
         else return false;
     }
 
+
     this.controllaPossibileVincita = function () {
         for (let r = 0; r < dimensioneMatrice; r++) {
             for (let c = 0; c < dimensioneMatrice; c++) {
                 if (matrice[r][c] == 2048) {
                     giocoInCorso = false;
-                    console.log("HAI VINTO");
+                    document.getElementById("row-3").innerHTML = `<div class="alert alert-success" id="vittoria-sconfitta">` +
+                        `<strong>Complimenti! Hai vinto!</strong>` +
+                        '</div>';
+                    creaTastoRigioca();
+                    return 0;
                 }
             }
         }
+        if (controllaSePossibiliMosse() == false) {
+            giocoInCorso = false;
+            document.getElementById("row-3").innerHTML = `<div class="alert alert-danger" id="vittoria-sconfitta">` +
+                `<strong>Hai perso! Ritenta!</strong>` +
+                '</div>';
+            creaTastoRigioca();
+        }
+
     }
-
-
-
-    this.controllaSePossibiliMosse = function () {
-        if (matricePiena() == false) {
+    let controllaSePossibiliMosse = function () {
+        if (matricePiena() == true) {
             if (controllaSePossibiliSomme() == true)
                 return true;
             return false;
         }
-        return false;
+        return true;
     }
     let controllaSePossibiliSomme = function () {
         for (let r = 0; r < dimensioneMatrice; r++) {
@@ -264,9 +276,16 @@ function Gioco2048() {
                         return true;
                     }
                 }
-                return false;
             }
         }
+        return false;
+    }
+
+
+    this.controllaSeGiocoInCorso = function () {
+        if (giocoInCorso)
+            return true;
+        return false;
     }
 
 
@@ -281,32 +300,38 @@ function Gioco2048() {
 document.onkeydown = function checkKey() {
     let tasto = window.event.keyCode;
 
-    if (tasto == FRECCIA_ALTO) {
-        // console.log("FRECCIA_ALTO");
-        gioco2048.direzioneNord();
-        if (gioco2048.controllaValiditaMossa()) {
-            gioco2048.generaNumero();
+    if (gioco2048.controllaSeGiocoInCorso() == true) {
+        if (tasto == FRECCIA_ALTO) {
+            // console.log("FRECCIA_ALTO");
+            gioco2048.direzioneNord();
+            if (gioco2048.controllaValiditaMossa()) {
+                gioco2048.generaNumero();
+                gioco2048.controllaPossibileVincita();
+            }
         }
-    }
-    else if (tasto == FRECCIA_BASSO) {
-        // console.log("FRECCIA_BASSO");
-        gioco2048.direzioneSud();
-        if (gioco2048.controllaValiditaMossa()) {
-            gioco2048.generaNumero();
+        else if (tasto == FRECCIA_BASSO) {
+            // console.log("FRECCIA_BASSO");
+            gioco2048.direzioneSud();
+            if (gioco2048.controllaValiditaMossa()) {
+                gioco2048.generaNumero();
+                gioco2048.controllaPossibileVincita();
+            }
         }
-    }
-    else if (tasto == FRECCIA_SINISTRA) {
-        // console.log("FRECCIA_SINISTRA");
-        gioco2048.direzioneOvest();
-        if (gioco2048.controllaValiditaMossa()) {
-            gioco2048.generaNumero();
+        else if (tasto == FRECCIA_SINISTRA) {
+            // console.log("FRECCIA_SINISTRA");
+            gioco2048.direzioneOvest();
+            if (gioco2048.controllaValiditaMossa()) {
+                gioco2048.generaNumero();
+                gioco2048.controllaPossibileVincita();
+            }
         }
-    }
-    else if (tasto == FRECCIA_DESTRA) {
-        // console.log("FRECCIA_DESTRA");
-        gioco2048.direzioneEst();
-        if (gioco2048.controllaValiditaMossa()) {
-            gioco2048.generaNumero();
+        else if (tasto == FRECCIA_DESTRA) {
+            // console.log("FRECCIA_DESTRA");
+            gioco2048.direzioneEst();
+            if (gioco2048.controllaValiditaMossa()) {
+                gioco2048.generaNumero();
+                gioco2048.controllaPossibileVincita();
+            }
         }
     }
 
@@ -364,4 +389,16 @@ function tornaAlMenu() {
     document.getElementById("container").remove();
     // forza4.azzeraTimeId();
     crea();
+}
+
+function creaTastoRigioca() {
+    document.getElementById("box-1").innerHTML += '<div class="bottone-menù" onclick="rigioca()">' +
+        '<button id="bottone-rigioca">RIGIOCA</button>' +
+        '</div>';
+}
+
+function rigioca() {
+    document.getElementById("container").remove();
+    creaScheletro();
+    start();
 }
