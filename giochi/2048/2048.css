@@ -1,0 +1,167 @@
+h1 {
+    text-align: center;
+}
+
+/* @font-face {
+    font-family: fontTitoloNumeri;
+    src: url("./font/");
+} */
+
+.titoloNumeri {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+td {
+    /* border: 1px solid gray; */
+    /* border: 1px solid rgb(169, 198, 223); */
+    height: 90px;
+    width: 90px;
+    background: rgb(169, 198, 223);
+    border-radius: 4%;
+    box-shadow: 2px 2px 4px rgb(111, 129, 145);
+}
+/* COLORI CELLE IN BASE AL NUMERO */
+.cellaNumeri4 {
+    background: rgb(154, 177, 196);
+}
+.cellaNumeri8 {
+    background: rgb(118, 150, 175);
+}
+.cellaNumeri16 {
+    background: rgb(90, 143, 184);
+}
+.cellaNumeri32 {
+    background: rgb(56, 146, 214);
+}
+.cellaNumeri64 {
+    background: rgb(0, 116, 204);
+}
+.cellaNumeri128 {
+    background: rgb(51, 253, 159);
+}
+.cellaNumeri256 {
+    background: rgb(0, 202, 91);
+}
+.cellaNumeri512 {
+    background: rgb(156, 221, 36);
+}
+.cellaNumeri1024 {
+    background: rgb(240, 140, 47);
+}
+.cellaNumeri2048 {
+    background: rgb(240, 47, 47);
+}
+
+
+
+
+#contenitoreGioco {
+    display: flex;
+    flex-direction: column;
+}
+
+#divgioco {
+    text-align: center;
+    /* border: 1px solid gray; */
+}
+
+#tabellaGioco {
+    font: bold 22px arial, serif;
+    /* border: 10px solid rgb(97, 97, 97); */
+    background-color: gray;
+    padding: 10px;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+
+    background-color: rgb(169, 198, 223);
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
+    border-collapse: separate;
+}
+
+
+/*  */
+
+#bottone-gioca {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.0em;
+    width: 300px;
+    height: 100px;
+}
+
+button {
+    color: rgb(169, 198, 223);
+    background-color: rgb(218, 218, 218);
+    text-align: center;
+    border-radius: 8px;
+    padding: 1px 12px;
+    font-family: "Comic Sans MS";
+    font-weight: bold;
+    border-color: rgb(51, 51, 51);
+}
+
+button:hover {
+    background-color: gray;
+}
+
+#box-1 {
+    display: flex;
+    justify-content: center;
+    order: 1;
+    flex-direction: column;
+}
+
+#box-2 {
+    order: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#box-3 {
+    justify-content: center;
+    color: aliceblue;
+    font-size: 2em;
+    order: 3;
+    visibility: hidden;
+    width: 300px;
+}
+
+
+#vittoria-sconfitta {
+    border-radius: 8px;
+    font-family: "Comic Sans MS";
+    font-size: 2.2em;
+}
+
+#row-2 {
+    padding-top: 50px;
+}
+
+#row-3 {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+
+#container {
+    justify-content: center;
+}
+
+#bottone-tornaAlMenù,
+#bottone-rigioca {
+    width: 300px;
+    height: 100px;
+}
+
+.bottone-menù {
+    display: flex;
+    font-size: xx-large;
+    padding: 30px;
+}
