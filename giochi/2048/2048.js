@@ -35,6 +35,7 @@ function Gioco2048() {
         ];
         giocoInCorso = true;
         secondiTrascorsi = 0;
+        puntiOttenuti = 0;
         let strTab = "<table id='tabellaGioco'>";
         var cont = 0;
         for (let r = 0; r < dimensioneMatrice; r++) {
@@ -57,6 +58,10 @@ function Gioco2048() {
     let mostraTempoTrascorso = function () {
         document.getElementById("box-3-tempoTrascorso").innerHTML = `<strong>Tempo trascorso: </strong>${secondiTrascorsi} secondi`;
         secondiTrascorsi++;
+    }
+    let aggiornaPunteggio = function (puntiDaAggiungere) {
+        puntiOttenuti += puntiDaAggiungere;
+        document.getElementById("box-3-puntiOttenuti").innerHTML = `<strong>Punti ottenuti: </strong>${puntiOttenuti}`;
     }
 
     this.mostraMatrice = function () {
@@ -130,6 +135,7 @@ function Gioco2048() {
                 matrice[r][c] = 0;
                 spostamentoValido = true;
                 matriceTempCelleSommate[r - 1][c] = 1;      // segna che nella mossa corrente quel numero è gia stato sommato
+                aggiornaPunteggio(matrice[r - 1][c]);
             }
         }
     }
@@ -164,6 +170,7 @@ function Gioco2048() {
                 matrice[r][c] = 0;
                 spostamentoValido = true;
                 matriceTempCelleSommate[r + 1][c] = 1;
+                aggiornaPunteggio(matrice[r + 1][c]);
             }
         }
     }
@@ -198,6 +205,7 @@ function Gioco2048() {
                 matrice[r][c] = 0;
                 spostamentoValido = true;
                 matriceTempCelleSommate[r][c - 1] = 1;
+                aggiornaPunteggio(matrice[r][c - 1]);
             }
         }
     }
@@ -232,6 +240,7 @@ function Gioco2048() {
                 matrice[r][c] = 0;
                 spostamentoValido = true;
                 matriceTempCelleSommate[r][c + 1] = 1;
+                aggiornaPunteggio(matrice[r][c + 1]);
             }
         }
     }
@@ -370,10 +379,10 @@ function creaScheletro() {
         '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
         '</div>' +
         '<div class="col-3 alert alert-secondary" id="box-3">' +
+        '<div id="box-3-puntiOttenuti">' +
+        '</div>' +
         '<div id="box-3-tempoTrascorso">' +
         '</div>' +
-        // '<div id="box-3-numeroMine">' +
-        // '</div>' +
         '</div>' +
         '</div>' +
         '<div class="row" id="row-3">' +
@@ -391,6 +400,7 @@ function start() {
 
     document.getElementById("box-3").style.visibility = "visible";
     document.getElementById("box-3-tempoTrascorso").innerHTML = `<strong>Tempo trascorso: </strong>0 secondi`;
+    document.getElementById("box-3-puntiOttenuti").innerHTML = `<strong>Punti ottenuti: </strong>0`;
 
     gioco2048.creaTabella();
     document.getElementById("box-1").innerHTML = '<div class="bottone-menù" onclick="tornaAlMenu()">' +
