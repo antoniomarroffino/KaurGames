@@ -21,8 +21,8 @@ table {
 
 td {
     border: 1px solid black;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     color: black;
     text-align: center;
 }
@@ -95,26 +95,11 @@ button:hover {
     font-weight: bold;
 }
 
-#bottone-1vs1 {
-    height: 50px;
-    width: 200px;
-    text-align: center;
-    border-radius: 8px;
-    padding: 1px 12px;
-    font-family: "Comic Sans MS";
-    font-size: 1.4em;
-    font-weight: bold;
-}
-
-#vittoria-sconfitta {
+#vittoria,
+#sconfitta {
     border-radius: 8px;
     font-family: "Comic Sans MS";
     font-size: 3.0em;
-}
-
-#menù-container {
-    display: flex;
-    height: 300px;
 }
 
 #row-2 {
@@ -125,18 +110,6 @@ button:hover {
     display: flex;
     justify-content: center;
     padding-top: 50px;
-}
-
-.name {
-    font-size: xx-large;
-    text-align: center;
-}
-
-.menù-scelta {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: auto;
 }
 
 #container {
@@ -155,32 +128,7 @@ button:hover {
     padding: 30px;
 }
 
-.opzione {
-    width: 300px;
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-}
-
-.evidenziato {
-    background-color: rgb(107, 107, 107);
-}
-
 #box-3-scelta {
     padding: 10px;
     color: red;
-}
-
-.testoAlCentro {
-    text-align: center;
-}
-
-.testaSnake {
-    background-color: blue;
-}
-
-.corpoSnake {
-    background-color: aqua;
 }

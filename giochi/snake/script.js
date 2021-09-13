@@ -1,5 +1,6 @@
 const MELA = 5;
 const TESTA = 2;
+const CODA = 3;
 const CORPO = 1;
 const FRECCIA_SINISTRA = 37;
 const FRECCIA_ALTO = 38;
@@ -7,16 +8,17 @@ const FRECCIA_DESTRA = 39;
 const FRECCIA_BASSO = 40;
 
 var snake = new Object();
-snake.creaTabella = function(classe) {
-    snake.serpente = new Array;
+snake.creaTabella = function() {
+    snake.serpenteR = new Array;
+    snake.serpenteC = new Array;
     snake.appoggio = new Array;
-    snake.timing = 1000;
+    snake.timing = 300;
     snake.inMovimento;
     snake.rigioca = false;
     snake.righe = 13;
     snake.colonne = 13;
-    snake.modalita = classe;
     snake.melaMangiata = false;
+    snake.morto = false;
     snake.matrice = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -53,224 +55,352 @@ snake.creaTabella = function(classe) {
 
 snake.settings = function() {
     document.getElementById("box-3").style.visibility = "visible";
-    document.getElementById("box-3-modalità").innerHTML = "<strong>Modalità:</strong> " + snake.modalita;
+    document.getElementById("box-3-modalità").innerHTML = "<strong>Punti: 0</strong> ";
 }
 
 snake.posizionaMela = function() {
-    var n = Math.floor(Math.random() * 2);
-    if (n)
-        var img = "immagini/mela1.png";
-    else
-        var img = "immagini/mela2.png";
-
+    var sovrapposto;
+    var img = "immagini/mela.png";
     do {
+        sovrapposto = false;
         var r = Math.floor(Math.random() * snake.righe);
         var c = Math.floor(Math.random() * snake.colonne);
-    } while (snake.matrice[r][c] != 0);
+        for (var i = 0; i < snake.lunghezza; i++) {
+            if (r == snake.serpenteR[i] && c == snake.serpenteC[i])
+                sovrapposto = true;
+        }
+    } while (sovrapposto == true);
 
     snake.matrice[r][c] = MELA;
-    document.getElementById(r * snake.righe + c).innerHTML += '<img class="mela" src=' + img + '>';
+    document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + img + '>';
 }
 
 snake.posizionaTesta = function() {
-    var r = Math.floor(Math.random() * snake.righe);
+    var r = Math.floor(Math.random() * (snake.righe - 1)); //per piazzare la coda in basso
     var c = Math.floor(Math.random() * snake.colonne);
     snake.matrice[r][c] = TESTA;
-    document.getElementById(r * snake.righe + c).innerHTML = snake.matrice[r][c];
-    snake.serpente[0] = r;
-    snake.serpente[1] = c;
-    snake.lunghezza = 1;
+    snake.matrice[r + 1][c] = CODA;
+    var imgTesta = "immagini/testaA.png";
+    document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + imgTesta + '>';
+    var imgCoda = "immagini/codaB.png";
+    document.getElementById((r + 1) * snake.righe + c).innerHTML += '<img src=' + imgCoda + '>';
+    snake.serpenteR[0] = r;
+    snake.serpenteC[0] = c;
+    snake.serpenteR[1] = r + 1;
+    snake.serpenteC[1] = c;
+    snake.lunghezza = 2;
 }
 
 snake.spostamento = function() {
     var tasto;
     tasto = window.event.keyCode;
     if (tasto == FRECCIA_SINISTRA) {
-        clearInterval(snake.inMovimento);
-        snake.movimento("sinistra");
+        if (snake.tastoPremutoInPrecedenza != FRECCIA_DESTRA) {
+            clearInterval(snake.inMovimento);
+            snake.movimento("sinistra");
+        }
     } else if (tasto == FRECCIA_ALTO) {
-        clearInterval(snake.inMovimento);
-        snake.movimento("alto");
+        if (snake.tastoPremutoInPrecedenza != FRECCIA_BASSO) {
+            clearInterval(snake.inMovimento);
+            snake.movimento("alto");
+        }
     } else if (tasto == FRECCIA_DESTRA) {
-        clearInterval(snake.inMovimento);
-        snake.movimento("destra");
+        if (snake.tastoPremutoInPrecedenza != FRECCIA_SINISTRA) {
+            clearInterval(snake.inMovimento);
+            snake.movimento("destra");
+        }
     } else if (tasto == FRECCIA_BASSO) {
-        clearInterval(snake.inMovimento);
-        snake.movimento("basso");
+        if (snake.tastoPremutoInPrecedenza != FRECCIA_ALTO) {
+            clearInterval(snake.inMovimento);
+            snake.movimento("basso");
+        }
     }
-
 }
 
 snake.movimento = function(direzione) {
-    if (direzione == "sinistra")
+    snake.direzione = direzione;
+    if (direzione == "sinistra") {
         snake.inMovimento = setInterval(snake.spostaSx, snake.timing);
-    else if (direzione == "alto")
+        snake.tastoPremutoInPrecedenza = FRECCIA_SINISTRA;
+    } else if (direzione == "alto") {
         snake.inMovimento = setInterval(snake.spostaA, snake.timing);
-    else if (direzione == "destra")
+        snake.tastoPremutoInPrecedenza = FRECCIA_ALTO;
+    } else if (direzione == "destra") {
         snake.inMovimento = setInterval(snake.spostaDx, snake.timing);
-    else if (direzione == "basso")
+        snake.tastoPremutoInPrecedenza = FRECCIA_DESTRA;
+    } else if (direzione == "basso") {
         snake.inMovimento = setInterval(snake.spostaB, snake.timing);
+        snake.tastoPremutoInPrecedenza = FRECCIA_BASSO;
+    }
 }
 
-snake.spostaSx = function() {
-    if (snake.lunghezza == 1) {
-        for (var i = 0; i < snake.righe; i++)
-            for (var k = 0; k < snake.colonne; k++)
-                if (snake.matrice[i][k] == 2) {
-                    var r = i;
-                    var c = k;
-                }
-
+snake.cancellaSerpente = function() {
+    for (var i = 0; i < snake.lunghezza; i++) {
+        var r = snake.serpenteR[i];
+        var c = snake.serpenteC[i];
+        snake.matrice[r][c] = 0;
         document.getElementById(r * snake.righe + c).innerHTML = " ";
-        snake.matrice[r][c] = 0; //azzero la testa
+    }
+}
 
-        if (c != 0)
-            c--;
-        else
-            c = snake.colonne - 1;
+snake.disegnaSerpente = function() {
+    var img, imgTesta;
+    var r, c, tempR, tempC;
+    for (var i = 0; i < snake.lunghezza; i++) {
+        r = snake.serpenteR[i];
+        c = snake.serpenteC[i];
+        if (i == 0) { //posiziono la testa nella direzione giusta
+            snake.matrice[r][c] = TESTA;
+            if (snake.direzione == "sinistra")
+                imgTesta = "immagini/testaSx.png";
+            else if (snake.direzione == "alto")
+                imgTesta = "immagini/testaA.png";
+            else if (snake.direzione == "destra")
+                imgTesta = "immagini/testaDx.png";
+            else if (snake.direzione == "basso")
+                imgTesta = "immagini/testaB.png";
+            document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + imgTesta + '>';
+        } else {
+            if (i == snake.lunghezza - 1) { //metto la coda all'ultimo posto
+                snake.matrice[r][c] = CODA;
+                if (tempR == r)
+                    if (tempC < c)
+                        img = "immagini/codaDx.png";
+                    else
+                        img = "immagini/codaSx.png";
+                else if (tempC == c)
+                    if (tempR < r)
+                        img = "immagini/codaB.png";
+                    else
+                        img = "immagini/codaA.png";
 
-        document.getElementById(r * snake.righe + c).innerHTML = snake.matrice[r][c];
-    } else {
-        if (c != 0)
-            c--;
-        else
-            c = snake.colonne - 1;
-
-        if (snake.matrice[r][c] == MELA) {
-            snake.posizionaMela();
-            snake.lunghezza++;
-            snake.serpente[snake.lunghezza * 2 - 2] = tempR;
-            snake.serpente[snake.lunghezza * 2 - 1] = tempC;
-        }
-        var tC = c,
-            tR = r;
-        for (var i = 0; i < snake.lunghezza; i++) {
-            for (var k = 0; k < 2; k++) {
-                if (k) {
-                    tC = snake.serpente[i * 2 + k];
-                    snake.serpente[i * 2 + k] = c;
-                    c = tC;
-                } else {
-                    tR = snake.serpente[i * 2 + k];
-                    snake.serpente[i * 2 + k] = r;
-                    r = tR
+                document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + img + '>';
+            } else { //posiziono il corpo
+                snake.matrice[r][c] = CORPO;
+                if (r == tempR) {
+                    if (tempC < c) { //vado a destra
+                        if (snake.serpenteR[i + 1] != r)
+                            if (snake.serpenteR[i + 1] < r)
+                                img = "immagini/angoloA-Sx.png";
+                            else
+                                img = "immagini/angoloB-Sx.png";
+                        else
+                            img = "immagini/corpoOrizzontale.png";
+                    } else { //vado a sinistra              
+                        if (snake.serpenteR[i + 1] != r)
+                            if (snake.serpenteR[i + 1] < r)
+                                img = "immagini/angoloA-Dx.png";
+                            else
+                                img = "immagini/angoloB-Dx.png";
+                        else
+                            img = "immagini/corpoOrizzontale.png";
+                    }
+                } else
+                if (c == tempC) {
+                    if (tempR < r) { //vado in basso
+                        if (snake.serpenteC[i + 1] != c)
+                            if (snake.serpenteC[i + 1] < c)
+                                img = "immagini/angoloA-Sx.png";
+                            else
+                                img = "immagini/angoloA-Dx.png";
+                        else
+                            img = "immagini/corpoVerticale.png";
+                    } else { //vado in alto
+                        if (snake.serpenteC[i + 1] != c)
+                            if (snake.serpenteC[i + 1] < c)
+                                img = "immagini/angoloB-Sx.png";
+                            else
+                                img = "immagini/angoloB-Dx.png";
+                        else
+                            img = "immagini/corpoVerticale.png";
+                    }
                 }
+                document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + img + '>';
             }
+
         }
-        for (var i = 0; i < snake.lunghezza; i++) {
-            for (var k = 0; k < 2; k++) {
-                if (k)
-                    c = snake.serpente[i * 2 + k];
-                else
-                    r = snake.serpente[i * 2 + k];
+        tempR = r;
+        tempC = c;
+    }
+    if (snake.morto) {
+        document.getElementById(snake.serpenteR[0] * snake.righe + snake.serpenteC[0]).innerHTML = " ";
+        document.getElementById(snake.serpenteR[0] * snake.righe + snake.serpenteC[0]).innerHTML += '<img src=' + imgTesta + '>';
+    }
+
+}
+
+snake.controlloMela = function(tempR, tempC) {
+    var r = snake.serpenteR[0];
+    var c = snake.serpenteC[0];
+    if (snake.matrice[r][c] == MELA) {
+        snake.matrice[r][c] = 0;
+        snake.serpenteR[snake.lunghezza] = tempR;
+        snake.serpenteC[snake.lunghezza] = tempC;
+        snake.lunghezza++;
+        snake.posizionaMela();
+        document.getElementById(r * snake.righe + c).innerHTML = " ";
+        document.getElementById("box-3-modalità").innerHTML = "<strong>Punti: </strong>" + (snake.lunghezza - 2);
+    }
+}
+
+snake.controlloMorte = function() {
+    if (snake.lunghezza > 1) {
+        var r = snake.serpenteR[0];
+        var c = snake.serpenteC[0];
+        for (var i = 1; i < snake.lunghezza; i++) {
+            var r2 = snake.serpenteR[i];
+            var c2 = snake.serpenteC[i];
+            if (r == r2 && c == c2) {
+                snake.morto = true;
+                sconfitta();
             }
-            document.getElementById(r * snake.righe + c).innerHTML = snake.matrice[r][c];
         }
     }
 }
 
+snake.controlloVittoria = function() {
+    if (snake.lunghezza == snake.righe * snake.colonne - 1)
+        vittoria();
+}
+
+snake.spostaSx = function() {
+    var r, c, tempR, tempC;
+    snake.cancellaSerpente();
+
+    for (var i = 0; i < snake.lunghezza; i++) {
+        r = snake.serpenteR[i];
+        c = snake.serpenteC[i];
+        if (i == 0) {
+            snake.serpenteR[i] = r;
+            if (c != 0)
+                snake.serpenteC[i] = c - 1;
+            else
+                snake.serpenteC[i] = snake.colonne - 1;
+        } else {
+            snake.serpenteR[i] = tempR;
+            snake.serpenteC[i] = tempC;
+        }
+        tempR = r;
+        tempC = c;
+    }
+
+    snake.controlloMela(tempR, tempC);
+
+    snake.controlloMorte();
+
+    snake.disegnaSerpente();
+
+    snake.controlloVittoria();
+}
+
 snake.spostaA = function() {
-    for (var i = 0; i < snake.righe; i++)
-        for (var k = 0; k < snake.colonne; k++)
-            if (snake.matrice[i][k] == 2) {
-                var r = i;
-                var c = k;
-            }
+    var r, c, tempR, tempC;
+    snake.cancellaSerpente();
 
-    document.getElementById(r * snake.righe + c).innerHTML = " ";
-    snake.matrice[r][c] = 0; //azzero la testa
-    if (r != 0)
-        r--;
-    else
-        r = snake.righe - 1;
+    for (var i = 0; i < snake.lunghezza; i++) {
+        r = snake.serpenteR[i];
+        c = snake.serpenteC[i];
 
-    snake.matrice[r][c] = 2;
-    document.getElementById(r * snake.righe + c).innerHTML = snake.matrice[r][c];
+        if (i == 0) {
+            snake.serpenteC[i] = c;
+            if (r != 0)
+                snake.serpenteR[i] = r - 1;
+            else
+                snake.serpenteR[i] = snake.righe - 1;
+        } else {
+            snake.serpenteR[i] = tempR;
+            snake.serpenteC[i] = tempC;
+        }
+        tempR = r;
+        tempC = c;
+    }
+
+    snake.controlloMela(tempR, tempC);
+
+    snake.controlloMorte();
+
+    snake.disegnaSerpente();
+
+    snake.controlloVittoria();
 }
 
 snake.spostaDx = function() {
-    for (var i = 0; i < snake.righe; i++)
-        for (var k = 0; k < snake.colonne; k++)
-            if (snake.matrice[i][k] == 2) {
-                var r = i;
-                var c = k;
-            }
+    var r, c, tempR, tempC;
+    snake.cancellaSerpente();
 
-    document.getElementById(r * snake.righe + c).innerHTML = " ";
-    snake.matrice[r][c] = 0; //azzero la testa
-    if (c != snake.colonne - 1)
-        c++;
-    else
-        c = 0;
+    for (var i = 0; i < snake.lunghezza; i++) {
+        r = snake.serpenteR[i];
+        c = snake.serpenteC[i];
 
-    snake.matrice[r][c] = 2;
-    document.getElementById(r * snake.righe + c).innerHTML = snake.matrice[r][c];
+        if (i == 0) { //cambio la posizione e la aggiorno secondo la direzione
+            snake.serpenteR[i] = r;
+            if (c != snake.colonne - 1)
+                snake.serpenteC[i] = c + 1;
+            else
+                snake.serpenteC[i] = 0;
+        } else { //posizioni precedenti
+            snake.serpenteR[i] = tempR;
+            snake.serpenteC[i] = tempC;
+        }
+        tempR = r;
+        tempC = c;
+    }
+
+    snake.controlloMela(tempR, tempC);
+
+    snake.controlloMorte();
+
+    snake.disegnaSerpente();
+
+    snake.controlloVittoria();
 }
 
 snake.spostaB = function() {
-    for (var i = 0; i < snake.righe; i++)
-        for (var k = 0; k < snake.colonne; k++)
-            if (snake.matrice[i][k] == 2) {
-                var r = i;
-                var c = k;
-            }
+    var r, c, tempR, tempC;
+    snake.cancellaSerpente();
 
-    document.getElementById(r * snake.righe + c).innerHTML = " ";
-    snake.matrice[r][c] = 0; //azzero la testa
-    if (r != snake.righe - 1)
-        r++;
-    else
-        r = 0;
+    for (var i = 0; i < snake.lunghezza; i++) {
+        r = snake.serpenteR[i];
+        c = snake.serpenteC[i];
 
-    snake.matrice[r][c] = 2;
-    document.getElementById(r * snake.righe + c).innerHTML = snake.matrice[r][c];
-}
-snake.trovaTesta = function() {
-    for (var i = 0; i < snake.righe; i++)
-        for (var k = 0; k < snake.colonne; k++)
-            if (snake.matrice[i][k] == 2) {
-                var r = i;
-                var c = k;
-            }
+        if (i == 0) {
+            snake.serpenteC[i] = c;
+            if (r != snake.righe - 1)
+                snake.serpenteR[i] = r + 1;
+            else
+                snake.serpenteR[i] = 0;
+        } else {
+            snake.serpenteR[i] = tempR;
+            snake.serpenteC[i] = tempC;
+        }
+        tempR = r;
+        tempC = c;
+    }
+
+    snake.controlloMela(tempR, tempC);
+
+    snake.controlloMorte();
+
+    snake.disegnaSerpente();
+
+    snake.controlloVittoria();
 }
 
 function gioca() {
-    var strEasy = "facile";
-    var strNormal = "normale";
-    var strHard = "difficile";
+
 
     document.getElementsByTagName("div")[1].remove();
 
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
 
-    var str = '<div class="alert alert-secondary" id="menù-container">' +
-        '<div class="row menù-scelta">' +
-        '<h2>Seleziona la modalità di gioco.</h2>' +
-        '<div class="row menù-scelta">' +
-        '<button class="btn" id="bottone-facile" onclick="start(\'' + strEasy + '\')">FACILE</button>' +
-        '<button class="btn" id="bottone-normale" onclick="start(\'' + strNormal + '\')">NORMALE</button>' +
-        '<button class="btn" id="bottone-difficile" onclick="start(\'' + strHard + '\')">DIFFICILE</button>' +
-        '</div>' +
-        '</div>' +
-        '</div>';
-    document.getElementById("box-2").innerHTML += str;
+    start();
 }
 
 
 
-function start(tdClass) {
-    if (!snake.rigioca) {
-        document.getElementById("bottone-facile").style.display = 'none';
-        document.getElementById("bottone-facile").style.visibility = "hidden";
-        document.getElementById("bottone-normale").style.display = 'none';
-        document.getElementById("bottone-normale").style.visibility = "hidden";
-        document.getElementById("bottone-difficile").style.display = 'none';
-        document.getElementById("bottone-difficile").style.visibility = "hidden";
-        document.getElementById("menù-container").style.display = 'none';
-        document.getElementById("menù-container").style.visibility = "hidden";
-    }
-    snake.creaTabella(tdClass);
+function start() {
+    snake.creaTabella();
     snake.settings();
     snake.posizionaTesta();
     snake.posizionaMela();
@@ -281,35 +411,20 @@ function start(tdClass) {
 }
 
 function sconfitta() {
-    document.getElementById("row-3").innerHTML = '<div class="alert alert-danger" id="vittoria-sconfitta">' +
-        '<strong>Hai perso contro la CPU...</strong>' +
+    document.getElementById("row-3").innerHTML = '<div class="alert alert-danger" id="sconfitta">' +
+        '<strong>Hai perso...</strong>' +
         '</div>';
-}
-
-function vittoria() {
-    if (tris.modalita != '1 VS 1')
-        if (tris.vincitore == tris.giocatore1) {
-            document.getElementById("row-3").innerHTML = '<div class="alert alert-success" id="vittoria-sconfitta">' +
-                '<strong>Hai vinto contro la CPU!</strong>' +
-                '</div>';
-        } else
-            sconfitta();
-    else {
-        if (tris.vincitore == tris.giocatore1) {
-            document.getElementById("row-3").innerHTML = '<div class="alert alert-success" id="vittoria-sconfitta">' +
-                '<strong>Ha vinto il giocatore 1!</strong>' +
-                '</div>';
-        } else {
-            document.getElementById("row-3").innerHTML = '<div class="alert alert-success" id="vittoria-sconfitta">' +
-                '<strong>Ha vinto il giocatore 2!</strong>' +
-                '</div>';
-        }
-    }
-    togliOnClick();
+    clearInterval(snake.inMovimento);
     creaTastoRigioca();
 }
 
-
+function vittoria() {
+    document.getElementById("row-3").innerHTML = '<div class="alert alert-success" id="vittoria">' +
+        '<strong>Hai vinto!</strong>' +
+        '</div>';
+    clearInterval(snake.inMovimento);
+    creaTastoRigioca();
+}
 
 function creaTastoRigioca() {
     document.getElementById("box-1").innerHTML += '<div class="bottone-menù" onclick="rigioca()">' +
@@ -323,13 +438,11 @@ function tornaAlMenu() {
 }
 
 function rigioca() {
-    var mod = tris.modalita;
-    tris.rigioca = true;
     document.getElementById("container").remove();
     creaScheletro();
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
-    start(mod);
+    start();
 }
 
 function crea() {
