@@ -21,10 +21,13 @@ function Gioco2048() {
 
     let puntiOttenuti;
     let dimensioneMatrice = 4;
+    let mosseEffettuate;
     let spostamentoValido = false;
     let giocoInCorso;
     let timeId;
     let secondiTrascorsi;
+    let mostraNumeroGenerato;
+    let rNumeroGenerato, cNumeroGenerato;
 
     this.creaTabella = function () {
         matrice = [
@@ -38,10 +41,11 @@ function Gioco2048() {
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0]
-        ];    
+        ];
         giocoInCorso = true;
         secondiTrascorsi = 0;
         puntiOttenuti = 0;
+        mosseEffettuate = 0;
         let strTab = "<table id='tabellaGioco'>";
         var cont = 0;
         for (let r = 0; r < dimensioneMatrice; r++) {
@@ -69,6 +73,10 @@ function Gioco2048() {
         puntiOttenuti += puntiDaAggiungere;
         document.getElementById("box-3-puntiOttenuti").innerHTML = `<strong>Punti ottenuti: </strong>${puntiOttenuti}`;
     }
+    let aggiornaMosseEffettuate = function () {
+        mosseEffettuate++;
+        document.getElementById("box-3-mosseEffettuate").innerHTML = `<strong>Mosse effettuate: </strong>${mosseEffettuate}`;
+    }
 
     this.mostraMatrice = function () {
         let celleTabella = document.getElementById("tabellaGioco").getElementsByTagName("td");
@@ -86,21 +94,33 @@ function Gioco2048() {
                         // celleTabella[cont].innerHTML = `<div class="cellaSomma">${matrice[r][c]}</div>`;
                         celleTabella[cont].innerHTML = `<div class="divCella"><div class="cellaSomma">${matrice[r][c]}</div></div>`;
                     }
+                    if (mostraNumeroGenerato && r == rNumeroGenerato && c == cNumeroGenerato) {
+                        celleTabella[cont].innerHTML = `<div class="divCella"><div class="cellaNumeroGenerato">${matrice[r][c]}</div></div>`;
+                    }
                 }
                 cont++;
             }
         }
     }
 
+
+    let numero2o4 = function () {
+        let numTemp = Math.floor(Math.random() * (100 - 0) + 0);
+        if (numTemp < 25) return 4;
+        return 2;
+    }
     this.generaNumero = function () {
         let rCasuale, cCasuale;
-        let numeroGenerato = 2;
+        let numeroGenerato = numero2o4();
         if (matricePiena() == false) {
             do {
                 rCasuale = Math.floor(Math.random() * (dimensioneMatrice - 0) + 0);
                 cCasuale = Math.floor(Math.random() * (dimensioneMatrice - 0) + 0);
             } while (matrice[rCasuale][cCasuale] != 0);
             matrice[rCasuale][cCasuale] = numeroGenerato;
+            mostraNumeroGenerato = true;
+            rNumeroGenerato = rCasuale;
+            cNumeroGenerato = cCasuale;
             this.mostraMatrice();
         }
     }
@@ -259,7 +279,10 @@ function Gioco2048() {
 
 
     this.controllaValiditaMossa = function () {
-        if (spostamentoValido) return true;
+        if (spostamentoValido) {
+            aggiornaMosseEffettuate();
+            return true;
+        }
         else return false;
     }
 
@@ -395,6 +418,8 @@ function creaScheletro() {
         '</div>' +
         '<div id="box-3-tempoTrascorso">' +
         '</div>' +
+        '<div id="box-3-mosseEffettuate">' +
+        '</div>' +
         '</div>' +
         '</div>' +
         '<div class="row" id="row-3">' +
@@ -413,6 +438,7 @@ function start() {
     document.getElementById("box-3").style.visibility = "visible";
     document.getElementById("box-3-tempoTrascorso").innerHTML = `<strong>Tempo trascorso: </strong>0 secondi`;
     document.getElementById("box-3-puntiOttenuti").innerHTML = `<strong>Punti ottenuti: </strong>0`;
+    document.getElementById("box-3-mosseEffettuate").innerHTML = `<strong>Mosse effettuate: </strong>0`;
 
     gioco2048.creaTabella();
     document.getElementById("box-1").innerHTML = '<div class="bottone-menù" onclick="tornaAlMenu()">' +

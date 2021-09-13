@@ -9,7 +9,7 @@ h1 {
 td {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #353535;
-    font-size: 40px;;
+    font-size: 40px;
     /* border: 1px solid gray; */
     /* border: 1px solid rgb(169, 198, 223); */
     height: 90px;
@@ -67,18 +67,47 @@ td {
     border-radius: 4%;
     width: 90px;
     height: 90px;
-    animation: my_animation 0.5s 1 ease-out;
+    animation: animation_numero_sommato 0.5s 1 ease-out;
 }
-
-@keyframes my_animation {
-    0% {width: 90px; height: 90px;}
+@keyframes animation_numero_sommato {
+    0% {width: 90px; height: 90px;
+        font-size: 40px;
+    }
     25% {
         width: 100px; 
         background-color: yellow;
         height: 100px;
+        font-size: 50px;
         /* margin-top: -5px;
         margin-left: -5px; */
         border: 2px solid black;
+    }
+    100% {width: 90px;
+        height: 90px;
+        font-size: 40px;
+    }
+}
+
+.cellaNumeroGenerato {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 4%;
+    width: 90px;
+    height: 90px;
+    animation: animation_numero_generato 0.5s 1 ease-out;
+}
+@keyframes animation_numero_generato {
+    0% {width: 10px; height: 10px;
+        font-size: 5px;
+    }
+    25% {
+        width: 100px; 
+        /* background-color: yellow; */
+        height: 100px;
+        border: 2px solid gray;
+        font-size: 45px;
     }
     100% {width: 90px;
         height: 90px;
