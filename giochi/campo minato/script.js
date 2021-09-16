@@ -1,3 +1,5 @@
+const BOMBA = 9;
+
 var matriceFacile = [
     [0, 0, 0, 0, 0, 0, 0, 0, ],
     [0, 0, 0, 0, 0, 0, 0, 0, ],
@@ -49,6 +51,7 @@ campoMinato.creaTabella = function(righe, colonne, classe) {
     campoMinato.modalita = classe; //str 
     campoMinato.rigioca = false;
     campoMinato.partitaTerminata = false;
+    campoMinato.bandieraAttiva = false;
     var cont = 0;
     if (campoMinato.righe == 8)
         campoMinato.matrice = matriceFacile;
@@ -58,6 +61,13 @@ campoMinato.creaTabella = function(righe, colonne, classe) {
         campoMinato.matrice = matriceDifficile;
 
     campoMinato.azzeraMatrice();
+
+    if (campoMinato.righe == 8)
+        campoMinato.appoggio = matriceFacile;
+    else if (campoMinato.righe == 10)
+        campoMinato.appoggio = matriceNormale;
+    else
+        campoMinato.appoggio = matriceDifficile;
 
     var str = '<table align="center">';
     for (var r = 0; r < campoMinato.righe; r++) {
@@ -84,8 +94,8 @@ campoMinato.posizionaMine = function(mine) {
         do {
             var r = Math.floor(Math.random() * campoMinato.righe);
             var c = Math.floor(Math.random() * campoMinato.colonne);
-        } while (campoMinato.matrice[r][c] == 9);
-        campoMinato.matrice[r][c] = 9; //9 è il numero che indica la mina
+        } while (campoMinato.matrice[r][c] == BOMBA);
+        campoMinato.matrice[r][c] = BOMBA; //9 è il numero che indica la mina
     }
 }
 
@@ -99,7 +109,7 @@ campoMinato.stampaNumeri = function() {
 campoMinato.riempiMatrice = function() {
     for (var r = 0; r < campoMinato.righe; r++) {
         for (var c = 0; c < campoMinato.colonne; c++) {
-            if (campoMinato.matrice[r][c] >= 9) { //mina rilevata
+            if (campoMinato.matrice[r][c] >= BOMBA) { //mina rilevata
 
                 if (r == 0 && c == 0) {
                     campoMinato.matrice[r][c + 1]++;
@@ -177,7 +187,7 @@ campoMinato.riempiMatrice = function() {
 campoMinato.stampaMine = function() {
     for (var r = 0; r < campoMinato.righe; r++) {
         for (var c = 0; c < campoMinato.colonne; c++) {
-            if (campoMinato.matrice[r][c] >= 9)
+            if (campoMinato.matrice[r][c] >= BOMBA)
                 campoMinato.matrice[r][c] = '*';
         }
     }
@@ -194,36 +204,42 @@ campoMinato.scopri = function(idCasella)  {
     var r = parseInt(pos / campoMinato.righe);
     var c = pos % campoMinato.righe;
 
+    if (campoMinato.bandieraAttiva) {
+        if (campoMinato.appoggio[r][c] == 0) {
+            document.getElementsByTagName('td')[idCasella].innerHTML = '<img class="mina" src="immagini/bandiera.png">';
+            campoMinato.appoggio[r][c] = 1;
+        } else {
+            document.getElementsByTagName('td')[idCasella].innerHTML = ' ';
+            campoMinato.appoggio[r][c] = 0;
+        }
+    } else {
+        campoMinato.scopriCasella(pos, r, c);
 
-    campoMinato.scopriCasella(pos, r, c);
-
-    if (campoMinato.matrice[r][c] == 0) {
-        campoMinato.matrice[r][c] = 20;
-        if (c != 0 && r != 0)
-            campoMinato.scopri(pos - campoMinato.righe - 1);
-        if (r != 0)
-            campoMinato.scopri(pos - campoMinato.righe);
-        if (r != 0 && c != maxR)
-            campoMinato.scopri(pos - campoMinato.righe + 1);
-        if (c != maxR)
-            campoMinato.scopri(pos + 1);
-        if (c != maxR && r != maxR)
-            campoMinato.scopri(pos + campoMinato.righe + 1);
-        if (r != maxR)
-            campoMinato.scopri(pos + campoMinato.righe);
-        if (r != maxR && c != 0)
-            campoMinato.scopri(pos + campoMinato.righe - 1);
-        if (c != 0)
-            campoMinato.scopri(pos - 1);
-
+        if (campoMinato.matrice[r][c] == 0) {
+            campoMinato.matrice[r][c] = 20;
+            if (c != 0 && r != 0)
+                campoMinato.scopri(pos - campoMinato.righe - 1);
+            if (r != 0)
+                campoMinato.scopri(pos - campoMinato.righe);
+            if (r != 0 && c != maxR)
+                campoMinato.scopri(pos - campoMinato.righe + 1);
+            if (c != maxR)
+                campoMinato.scopri(pos + 1);
+            if (c != maxR && r != maxR)
+                campoMinato.scopri(pos + campoMinato.righe + 1);
+            if (r != maxR)
+                campoMinato.scopri(pos + campoMinato.righe);
+            if (r != maxR && c != 0)
+                campoMinato.scopri(pos + campoMinato.righe - 1);
+            if (c != 0)
+                campoMinato.scopri(pos - 1);
+        }
+        campoMinato.isBombaTrovata();
+        if (campoMinato.contCaselle == campoMinato.numeroMine && campoMinato.partitaTerminata == false) {
+            vittoria();
+            campoMinato.partitaTerminata = true;
+        }
     }
-
-    campoMinato.isBombaTrovata();
-    if (campoMinato.contCaselle == campoMinato.numeroMine && campoMinato.partitaTerminata == false) {
-        vittoria();
-        campoMinato.partitaTerminata = true;
-    }
-
 }
 
 campoMinato.scopriCasella = function(idCasella, r, c) {
@@ -249,7 +265,6 @@ campoMinato.scopriCasella = function(idCasella, r, c) {
             campoMinato.matrice[r][c] = 30;
         document.getElementById("box-3-caselleRimanenti").innerHTML = "<strong>Caselle rimanenti:</strong> " + (campoMinato.contCaselle - campoMinato.numeroMine);
     }
-
 }
 
 
@@ -258,7 +273,17 @@ campoMinato.settings = function() {
     document.getElementById("box-3-modalità").innerHTML = "<strong>Modalità:</strong> " + campoMinato.modalita;
     document.getElementById("box-3-numeroMine").innerHTML = "<strong>Numero mine:</strong> " + campoMinato.numeroMine;
     document.getElementById("box-3-caselleRimanenti").innerHTML = "<strong>Caselle rimanenti:</strong> " + (campoMinato.contCaselle - campoMinato.numeroMine);
+    document.getElementById("box-3-sceltaBandiere").innerHTML = '<img class="bandiera" src="immagini/bandiera.png">';
+}
 
+campoMinato.attivaBandiere = function() {
+    if (campoMinato.bandieraAttiva) {
+        campoMinato.bandieraAttiva = false;
+        document.getElementById("box-3-onOff").innerHTML = "OFF";
+    } else {
+        campoMinato.bandieraAttiva = true;
+        document.getElementById("box-3-onOff").innerHTML = "ON";
+    }
 }
 
 function gioca() {
@@ -374,6 +399,12 @@ function creaScheletro() {
         '<div id="box-3-numeroMine">' +
         '</div>' +
         '<div id="box-3-caselleRimanenti">' +
+        '</div>' +
+        '<div id="containerBandiere">' +
+        '<div id="box-3-sceltaBandiere">' +
+        '</div>' +
+        '<div id="box-3-onOff" onclick="campoMinato.attivaBandiere()">OFF' +
+        '</div>' +
         '</div>' +
         '</div>' +
         '</div>' +

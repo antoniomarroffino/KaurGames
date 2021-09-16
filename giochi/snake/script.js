@@ -6,19 +6,30 @@ const FRECCIA_SINISTRA = 37;
 const FRECCIA_ALTO = 38;
 const FRECCIA_DESTRA = 39;
 const FRECCIA_BASSO = 40;
+const AUMENTO_VELOCITA_1 = 15;
+const AUMENTO_VELOCITA_2 = 30;
+const AUMENTO_VELOCITA_3 = 50;
+const AUMENTO_VELOCITA_4 = 100;
+const STOP_BANNER = 40;
 
 var snake = new Object();
 snake.creaTabella = function() {
     snake.serpenteR = new Array;
     snake.serpenteC = new Array;
     snake.appoggio = new Array;
+    snake.contatore = 0;
     snake.timing = 300;
+    snake.timingBanner = 200;
     snake.inMovimento;
+    snake.banner;
     snake.rigioca = false;
     snake.righe = 13;
     snake.colonne = 13;
     snake.melaMangiata = false;
     snake.morto = false;
+    snake.giocoFinito = false;
+    snake.velocitaAumentata = false;
+    snake.aumentiDiVelocita = new Array;
     snake.matrice = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -50,17 +61,22 @@ snake.creaTabella = function() {
     }
     str += '</table>';
     document.getElementById('box-2').innerHTML += str;
+
+    snake.aumentiDiVelocita[0] = false;
+    snake.aumentiDiVelocita[1] = false;
+    snake.aumentiDiVelocita[2] = false;
+    snake.aumentiDiVelocita[3] = false;
 }
 
 
 snake.settings = function() {
     document.getElementById("box-3").style.visibility = "visible";
-    document.getElementById("box-3-modalità").innerHTML = "<strong>Punti: 0</strong> ";
+    document.getElementById("box-3-punti").innerHTML = "<strong>Punti: 0</strong> ";
 }
 
 snake.posizionaMela = function() {
     var sovrapposto;
-    var img = "immagini/mela.png";
+    var imgMela = "immagini/mela.png";
     do {
         sovrapposto = false;
         var r = Math.floor(Math.random() * snake.righe);
@@ -72,7 +88,7 @@ snake.posizionaMela = function() {
     } while (sovrapposto == true);
 
     snake.matrice[r][c] = MELA;
-    document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + img + '>';
+    document.getElementById(r * snake.righe + c).innerHTML += '<img class="mela" src=' + imgMela + '>';
 }
 
 snake.posizionaTesta = function() {
@@ -81,9 +97,9 @@ snake.posizionaTesta = function() {
     snake.matrice[r][c] = TESTA;
     snake.matrice[r + 1][c] = CODA;
     var imgTesta = "immagini/testaA.png";
-    document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + imgTesta + '>';
+    document.getElementById(r * snake.righe + c).innerHTML += '<img class="serpente" src=' + imgTesta + '>';
     var imgCoda = "immagini/codaB.png";
-    document.getElementById((r + 1) * snake.righe + c).innerHTML += '<img src=' + imgCoda + '>';
+    document.getElementById((r + 1) * snake.righe + c).innerHTML += '<img class="serpente" src=' + imgCoda + '>';
     snake.serpenteR[0] = r;
     snake.serpenteC[0] = c;
     snake.serpenteR[1] = r + 1;
@@ -92,27 +108,29 @@ snake.posizionaTesta = function() {
 }
 
 snake.spostamento = function() {
-    var tasto;
-    tasto = window.event.keyCode;
-    if (tasto == FRECCIA_SINISTRA) {
-        if (snake.tastoPremutoInPrecedenza != FRECCIA_DESTRA) {
-            clearInterval(snake.inMovimento);
-            snake.movimento("sinistra");
-        }
-    } else if (tasto == FRECCIA_ALTO) {
-        if (snake.tastoPremutoInPrecedenza != FRECCIA_BASSO) {
-            clearInterval(snake.inMovimento);
-            snake.movimento("alto");
-        }
-    } else if (tasto == FRECCIA_DESTRA) {
-        if (snake.tastoPremutoInPrecedenza != FRECCIA_SINISTRA) {
-            clearInterval(snake.inMovimento);
-            snake.movimento("destra");
-        }
-    } else if (tasto == FRECCIA_BASSO) {
-        if (snake.tastoPremutoInPrecedenza != FRECCIA_ALTO) {
-            clearInterval(snake.inMovimento);
-            snake.movimento("basso");
+    if (snake.giocoFinito == false) {
+        var tasto;
+        tasto = window.event.keyCode;
+        if (tasto == FRECCIA_SINISTRA) {
+            if (snake.tastoPremutoInPrecedenza != FRECCIA_DESTRA) {
+                clearInterval(snake.inMovimento);
+                snake.movimento("sinistra");
+            }
+        } else if (tasto == FRECCIA_ALTO) {
+            if (snake.tastoPremutoInPrecedenza != FRECCIA_BASSO) {
+                clearInterval(snake.inMovimento);
+                snake.movimento("alto");
+            }
+        } else if (tasto == FRECCIA_DESTRA) {
+            if (snake.tastoPremutoInPrecedenza != FRECCIA_SINISTRA) {
+                clearInterval(snake.inMovimento);
+                snake.movimento("destra");
+            }
+        } else if (tasto == FRECCIA_BASSO) {
+            if (snake.tastoPremutoInPrecedenza != FRECCIA_ALTO) {
+                clearInterval(snake.inMovimento);
+                snake.movimento("basso");
+            }
         }
     }
 }
@@ -159,26 +177,61 @@ snake.disegnaSerpente = function() {
                 imgTesta = "immagini/testaDx.png";
             else if (snake.direzione == "basso")
                 imgTesta = "immagini/testaB.png";
-            document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + imgTesta + '>';
+            document.getElementById(r * snake.righe + c).innerHTML += '<img class="serpente" src=' + imgTesta + '>';
         } else {
             if (i == snake.lunghezza - 1) { //metto la coda all'ultimo posto
                 snake.matrice[r][c] = CODA;
-                if (tempR == r)
-                    if (tempC < c)
+                if (tempR == r) {
+                    if (tempC == 0 && c == snake.colonne - 1)
+                        img = "immagini/codaSx.png";
+                    else if (tempC == snake.colonne - 1 && c == 0)
+                        img = "immagini/codaDx.png";
+                    else if (tempC < c)
                         img = "immagini/codaDx.png";
                     else
                         img = "immagini/codaSx.png";
-                else if (tempC == c)
-                    if (tempR < r)
+                } else if (tempC == c) {
+                    if (tempR == 0 && r == snake.righe - 1)
+                        img = "immagini/codaA.png";
+                    else if (tempR == snake.righe - 1 && r == 0)
+                        img = "immagini/codaB.png";
+                    else if (tempR < r)
                         img = "immagini/codaB.png";
                     else
                         img = "immagini/codaA.png";
+                }
 
-                document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + img + '>';
+
+                document.getElementById(r * snake.righe + c).innerHTML += '<img class="serpente" src=' + img + '>';
             } else { //posiziono il corpo
                 snake.matrice[r][c] = CORPO;
                 if (r == tempR) {
-                    if (tempC < c) { //vado a destra
+                    img = "immagini/corpoOrizzontale.png";
+                    if (c == 0 && tempC == snake.colonne - 1) { //da sopra a sotto arrivando dalla stessa riga
+                        if (snake.serpenteC[i + 1] == c)
+                            if (snake.serpenteR[i + 1] < r)
+                                img = "immagini/angoloA-Sx.png";
+                            else
+                                img = "immagini/angoloB-Sx.png";
+                    } else if (c == snake.colonne - 1 && tempC == 0) { //da sotto a sopra arrivando dalla stessa riga
+                        if (snake.serpenteC[i + 1] == c)
+                            if (snake.serpenteR[i + 1] < r)
+                                img = "immagini/angoloA-Dx.png";
+                            else
+                                img = "immagini/angoloB-Dx.png";
+                    } else if (snake.serpenteR[i + 1] == 0 && r == snake.righe - 1) { //da sopra a sotto
+                        if (snake.serpenteC[i + 1] == c)
+                            if (tempC < c)
+                                img = "immagini/angoloB-Sx.png";
+                            else
+                                img = "immagini/angoloB-Dx.png";
+                    } else if (snake.serpenteR[i + 1] == snake.righe - 1 && r == 0) { //da sotto a sopra
+                        if (snake.serpenteC[i + 1] == c)
+                            if (tempC < c)
+                                img = "immagini/angoloA-Sx.png";
+                            else
+                                img = "immagini/angoloA-Dx.png";
+                    } else if (tempC < c) { //vado a destra
                         if (snake.serpenteR[i + 1] != r)
                             if (snake.serpenteR[i + 1] < r)
                                 img = "immagini/angoloA-Sx.png";
@@ -195,9 +248,34 @@ snake.disegnaSerpente = function() {
                         else
                             img = "immagini/corpoOrizzontale.png";
                     }
-                } else
-                if (c == tempC) {
-                    if (tempR < r) { //vado in basso
+                } else if (c == tempC) {
+                    img = "immagini/corpoVerticale.png";
+                    if (snake.serpenteC[i + 1] == 0 && c == snake.colonne - 1) { //da Dx a Sx 
+                        if (snake.serpenteR[i + 1] == r)
+                            if (tempR < r)
+                                img = "immagini/angoloA-Dx.png";
+                            else
+                                img = "immagini/angoloB-Dx.png";
+                    } else if (snake.serpenteC[i + 1] == snake.colonne - 1 && c == 0) { //da Sx a Dx
+                        if (snake.serpenteR[i + 1] == r)
+                            if (tempR < r)
+                                img = "immagini/angoloA-Sx.png";
+                            else
+                                img = "immagini/angoloB-Sx.png";
+                    } else if (r == 0 && tempR == snake.righe - 1) { //da sopra a sotto arrivando dalla stessa riga
+                        if (snake.serpenteR[i + 1] == r)
+                            if (snake.serpenteC[i + 1] < c)
+                                img = "immagini/angoloA-Sx.png";
+                            else
+                                img = "immagini/angoloA-Dx.png";
+
+                    } else if (r == snake.righe - 1 && tempR == 0) { //da sotto a sopra arrivando dalla stessa riga
+                        if (snake.serpenteR[i + 1] == r)
+                            if (snake.serpenteC[i + 1] < c)
+                                img = "immagini/angoloB-Sx.png";
+                            else
+                                img = "immagini/angoloB-Dx.png";
+                    } else if (tempR < r) { //vado in basso
                         if (snake.serpenteC[i + 1] != c)
                             if (snake.serpenteC[i + 1] < c)
                                 img = "immagini/angoloA-Sx.png";
@@ -215,16 +293,15 @@ snake.disegnaSerpente = function() {
                             img = "immagini/corpoVerticale.png";
                     }
                 }
-                document.getElementById(r * snake.righe + c).innerHTML += '<img src=' + img + '>';
+                document.getElementById(r * snake.righe + c).innerHTML += '<img class="serpente" src=' + img + '>';
             }
-
         }
         tempR = r;
         tempC = c;
     }
     if (snake.morto) {
         document.getElementById(snake.serpenteR[0] * snake.righe + snake.serpenteC[0]).innerHTML = " ";
-        document.getElementById(snake.serpenteR[0] * snake.righe + snake.serpenteC[0]).innerHTML += '<img src=' + imgTesta + '>';
+        document.getElementById(snake.serpenteR[0] * snake.righe + snake.serpenteC[0]).innerHTML += '<img class="serpente" src=' + imgTesta + '>';
     }
 
 }
@@ -239,7 +316,7 @@ snake.controlloMela = function(tempR, tempC) {
         snake.lunghezza++;
         snake.posizionaMela();
         document.getElementById(r * snake.righe + c).innerHTML = " ";
-        document.getElementById("box-3-modalità").innerHTML = "<strong>Punti: </strong>" + (snake.lunghezza - 2);
+        document.getElementById("box-3-punti").innerHTML = "<strong>Punti:  " + (snake.lunghezza - 2) + "</strong>";
     }
 }
 
@@ -263,6 +340,48 @@ snake.controlloVittoria = function() {
         vittoria();
 }
 
+snake.aumentoVelocita = function(decremento) {
+    snake.contatore = 0;
+    snake.timing = snake.timing - decremento;
+    snake.banner = setInterval(snake.mostraAumentoVelocita, snake.timingBanner);
+    snake.velocitaAumentata = true;
+    document.getElementById("box-3-aumento").style.visibility = "visible";
+    document.getElementById("box-3-aumento").style.display = "block";
+}
+
+snake.mostraAumentoVelocita = function() {
+    snake.contatore++;
+    if (snake.contatore % 2 == 0)
+        document.getElementById("box-3-aumento").className = "scrittaRossa";
+    else
+        document.getElementById("box-3-aumento").className = "scrittaBianca";
+
+    document.getElementById("box-3-aumento").innerHTML = "Velocità aumentata!";
+}
+
+snake.controlloAumentoVelocità = function() {
+    if (snake.velocitaAumentata == false) {
+        if (snake.lunghezza - 2 == AUMENTO_VELOCITA_1 && snake.aumentiDiVelocita[0] == false) {
+            snake.aumentiDiVelocita[0] = true;
+            snake.aumentoVelocita(100);
+        } else if (snake.lunghezza - 2 == AUMENTO_VELOCITA_2 && snake.aumentiDiVelocita[1] == false) {
+            snake.aumentiDiVelocita[1] = true;
+            snake.aumentoVelocita(50);
+        } else if (snake.lunghezza - 2 == AUMENTO_VELOCITA_3 && snake.aumentiDiVelocita[2] == false) {
+            snake.aumentiDiVelocita[2] = true;
+            snake.aumentoVelocita(50);
+        } else if (snake.lunghezza - 2 == AUMENTO_VELOCITA_4 && snake.aumentiDiVelocita[3] == false) {
+            snake.aumentiDiVelocita[3] = true;
+            snake.aumentoVelocita(50);
+        }
+    } else if (snake.contatore >= STOP_BANNER) {
+        snake.velocitaAumentata = false;
+        clearInterval(snake.banner);
+        document.getElementById("box-3-aumento").style.visibility = "hidden";
+        document.getElementById("box-3-aumento").style.display = "none";
+    }
+}
+
 snake.spostaSx = function() {
     var r, c, tempR, tempC;
     snake.cancellaSerpente();
@@ -283,8 +402,9 @@ snake.spostaSx = function() {
         tempR = r;
         tempC = c;
     }
-
     snake.controlloMela(tempR, tempC);
+
+    snake.controlloAumentoVelocità();
 
     snake.controlloMorte();
 
@@ -314,8 +434,9 @@ snake.spostaA = function() {
         tempR = r;
         tempC = c;
     }
-
     snake.controlloMela(tempR, tempC);
+
+    snake.controlloAumentoVelocità();
 
     snake.controlloMorte();
 
@@ -348,6 +469,8 @@ snake.spostaDx = function() {
 
     snake.controlloMela(tempR, tempC);
 
+    snake.controlloAumentoVelocità();
+
     snake.controlloMorte();
 
     snake.disegnaSerpente();
@@ -379,6 +502,8 @@ snake.spostaB = function() {
 
     snake.controlloMela(tempR, tempC);
 
+    snake.controlloAumentoVelocità();
+
     snake.controlloMorte();
 
     snake.disegnaSerpente();
@@ -387,17 +512,14 @@ snake.spostaB = function() {
 }
 
 function gioca() {
-
-
     document.getElementsByTagName("div")[1].remove();
-
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
+    document.getElementById("comeSiGioca").style.display = 'none';
+    document.getElementById("comeSiGioca").style.visibility = "hidden";
 
     start();
 }
-
-
 
 function start() {
     snake.creaTabella();
@@ -416,6 +538,7 @@ function sconfitta() {
         '</div>';
     clearInterval(snake.inMovimento);
     creaTastoRigioca();
+    snake.giocoFinito = true;
 }
 
 function vittoria() {
@@ -424,6 +547,7 @@ function vittoria() {
         '</div>';
     clearInterval(snake.inMovimento);
     creaTastoRigioca();
+    snake.giocoFinito = true;
 }
 
 function creaTastoRigioca() {
@@ -461,11 +585,13 @@ function creaScheletro() {
         '</div>' +
         '<div class="col-md-6" id="box-2">' +
         '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
+        '<div class="alert-primary" id="comeSiGioca" >Come si gioca?' +
+        '</div>' +
         '</div>' +
         '<div class="col-3 alert alert-secondary" id="box-3">' +
-        '<div id="box-3-modalità">' +
+        '<div id="box-3-punti">' +
         '</div>' +
-        '<div id="box-3-scelta">' +
+        '<div id="box-3-aumento">' +
         '</div>' +
         '</div>' +
         '</div>' +

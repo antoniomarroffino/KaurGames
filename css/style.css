@@ -1,15 +1,22 @@
-.gioco:hover{
+.gioco:hover {
     cursor: pointer;
     background-color: #b6effb;
     transition: 0.3s;
 }
-.gioco{
+
+.gioco {
     background-color: #b6effb;
     border-radius: 30px;
     font-family: NomeGioco;
 }
 
-.titolo{
+.giocoSpeciale {
+    background-color: #ff5252;
+    border-radius: 30px;
+    font-family: NomeGioco;
+}
+
+.titolo {
     font-size: 5vw;
     font-family: pacman;
     color: white;
@@ -18,7 +25,8 @@
     max-width: 90%;
 }
 
-p,button{
+p,
+button {
     font-family: Arial;
 }
 

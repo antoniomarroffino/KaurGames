@@ -2,7 +2,7 @@ h2 {
     text-align: center;
 }
 
-img {
+.mela {
     width: 30px;
     height: 30px;
 }
@@ -12,19 +12,20 @@ table {
     justify-content: center;
     width: 100%;
     height: 100%;
-}
-
-.mela {
-    width: 50%;
-    height: 50%;
+    padding: 10px;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    background-color: rgb(0, 97, 57);
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
+    border-collapse: collapse;
 }
 
 td {
-    border: 1px solid black;
     width: 35px;
     height: 35px;
-    color: black;
-    text-align: center;
 }
 
 .campo1 {
@@ -36,9 +37,6 @@ td {
 }
 
 #bottone-gioca {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 4.0em;
     width: 300px;
     height: 100px;
@@ -60,9 +58,9 @@ button:hover {
 }
 
 #box-1 {
+    order: 1;
     display: flex;
     justify-content: center;
-    order: 1;
     flex-direction: column;
 }
 
@@ -71,28 +69,19 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 #box-3 {
-    justify-content: center;
-    color: aliceblue;
-    font-size: 2em;
     order: 3;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     visibility: hidden;
-    width: 300px;
-}
-
-#bottone-facile,
-#bottone-normale,
-#bottone-difficile {
-    height: 50px;
     width: 200px;
-    text-align: center;
-    border-radius: 8px;
-    padding: 1px 12px;
-    font-family: "Comic Sans MS";
-    font-size: 1.4em;
-    font-weight: bold;
+    height: 100%;
+    background-color: transparent;
+    border: transparent;
 }
 
 #vittoria,
@@ -103,13 +92,15 @@ button:hover {
 }
 
 #row-2 {
+    display: flex;
+    justify-content: center;
     padding-top: 50px;
+    padding: 50px;
 }
 
 #row-3 {
     display: flex;
     justify-content: center;
-    padding-top: 50px;
 }
 
 #container {
@@ -117,9 +108,17 @@ button:hover {
 }
 
 #bottone-tornaAlMenù,
-#bottone-rigioca {
+#bottone-rigioca,
+#bottone-gioca {
     width: 300px;
     height: auto;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
 }
 
 .bottone-menù {
@@ -128,7 +127,60 @@ button:hover {
     padding: 30px;
 }
 
-#box-3-scelta {
+#box-3-punti,
+#box-3-aumento {
+    font: bold 22px arial, serif;
+    background-color: gray;
+    padding: 10px;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    background-color: rgb(169, 198, 223);
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
+    border-collapse: separate;
+}
+
+#box-3-punti {
+    text-decoration: underline;
+    font-size: 2.0em;
     padding: 10px;
     color: red;
+}
+
+#box-3-aumento {
+    font-size: 2.0em;
+    padding: 10px;
+    visibility: hidden;
+    display: none;
+}
+
+.serpente {
+    width: 100%;
+    height: 100%;
+}
+
+.scrittaRossa {
+    color: red;
+}
+
+.scrittaBianca {
+    color: white;
+}
+
+#comeSiGioca {
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+    color: black;
+    padding: 20px;
+    margin-top: 40%;
+    border: 2px solid rgb(0, 132, 221);
+    border-radius: 30%;
+}
+
+#comeSiGioca:hover {
+    background-color: #00b7ff;
 }

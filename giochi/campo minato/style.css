@@ -1,11 +1,3 @@
-body {
-    background-image: url("immagini/sfondo.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0;
-    padding: 0;
-}
-
 h1 {
     text-shadow: 2px 2px 4px black;
     color: aliceblue;
@@ -40,9 +32,6 @@ td:hover {
 }
 
 #bottone-gioca {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 4.0em;
     width: 300px;
     height: 100px;
@@ -64,9 +53,9 @@ button:hover {
 }
 
 #box-1 {
+    order: 1;
     display: flex;
     justify-content: center;
-    order: 1;
     flex-direction: column;
 }
 
@@ -75,15 +64,19 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 #box-3 {
-    justify-content: center;
-    color: aliceblue;
-    font-size: 2em;
     order: 3;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     visibility: hidden;
-    width: 300px;
+    width: 200px;
+    height: 100%;
+    background-color: transparent;
+    border: transparent;
 }
 
 #bottone-facile,
@@ -129,13 +122,15 @@ button:hover {
 }
 
 #row-2 {
+    display: flex;
+    justify-content: center;
     padding-top: 50px;
+    padding: 50px;
 }
 
 #row-3 {
     display: flex;
     justify-content: center;
-    padding-top: 50px;
 }
 
 #name {
@@ -144,8 +139,8 @@ button:hover {
 }
 
 .mina {
-    width: 20px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
 }
 
 .menu-scelta {
@@ -153,6 +148,8 @@ button:hover {
     justify-content: center;
     width: 100%;
     height: auto;
+    flex-direction: column;
+    align-items: center;
 }
 
 #container {
@@ -160,13 +157,68 @@ button:hover {
 }
 
 #bottone-tornaAlMenù,
-#bottone-rigioca {
+#bottone-rigioca,
+#bottone-gioca {
     width: 300px;
-    height: 100px;
+    height: auto;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
 }
 
 .bottone-menù {
     display: flex;
     font-size: xx-large;
     padding: 30px;
+}
+
+#box-3-modalità,
+#box-3-numeroMine,
+#box-3-caselleRimanenti,
+#box-3-sceltaBandiere,
+#box-3-onOff {
+    font: bold 22px arial, serif;
+    background-color: gray;
+    padding: 10px;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    background-color: rgb(169, 198, 223);
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
+    border-collapse: separate;
+}
+
+#box-3-sceltaBandiere {
+    display: flex;
+    margin-top: 50px;
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+    justify-content: center;
+}
+
+#box-3-onOff {
+    display: flex;
+    justify-content: center;
+    font: 3.0em;
+    color: black;
+    width: 100px;
+    height: auto;
+    background-color: aliceblue;
+}
+
+#box-3-onOff:hover {
+    background-color: grey;
+}
+
+.bandiera {
+    width: 100%;
+    height: 100%;
 }
