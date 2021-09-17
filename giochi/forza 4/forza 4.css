@@ -80,12 +80,30 @@ button:hover {
 }
 
 #box-3 {
-    justify-content: center;
-    color: aliceblue;
-    font-size: 2em;
     order: 3;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     visibility: hidden;
-    width: 300px;
+    width: 200px;
+    height: 100%;
+    background-color: transparent;
+    border: transparent;
+}
+
+#box-3-tempoTrascorso {
+    font: bold 22px arial, serif;
+    background-color: gray;
+    padding: 10px;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    background-color: rgb(169, 198, 223);
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
+    border-collapse: separate;
 }
 
 
@@ -111,9 +129,17 @@ button:hover {
 }
 
 #bottone-tornaAlMenù,
-#bottone-rigioca {
+#bottone-rigioca,
+#bottone-gioca {
     width: 300px;
-    height: 100px;
+    height: auto;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
 }
 
 .bottone-menù {
