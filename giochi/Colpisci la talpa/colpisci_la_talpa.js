@@ -8,16 +8,28 @@ function ColpisciLaTalpa() {
     let tempoMedioTalpa;
     let numeroTalpe;
     let posizioneTalpe = [[0, 0], [0, 0], [0, 0]];
+    let tempoRimanente;
+    let timeIdTempoRimanente;
+    let difficolta;
 
     this.creaStruttura = function () {
         punti = 0;
         altezzaCampo = 500;
         lunghezzaCampo = 600;
+        document.getElementById("box-3-tempoRimanente").innerHTML = `<strong>Tempo rimanente: </strong>${tempoRimanente} secondi`;
         document.getElementById("box-2").innerHTML = '<div id="contenutoreGioco"></div>'
         document.getElementById("contenutoreGioco").style.height = `${altezzaCampo}px`;
         document.getElementById("contenutoreGioco").style.width = `${lunghezzaCampo}px`;
 
+        clearInterval(timeIdTempoRimanente);
+        timeIdTempoRimanente = setInterval(aggiornaTempoRimanente, 1000);
+
         creaTalpe();
+    }
+    let aggiornaTempoRimanente = function () {
+        tempoRimanente--;
+        document.getElementById("box-3-tempoRimanente").innerHTML = `<strong>Tempo rimanente: </strong>${tempoRimanente} secondi`;
+        if (tempoRimanente == 0) tempoDiGiocoEsaurito();
     }
     let creaTalpe = function () {
         if (numeroTalpe == 1) {
@@ -33,27 +45,31 @@ function ColpisciLaTalpa() {
             clearInterval(timeIdTalpa2);
             document.getElementById("contenutoreGioco").innerHTML += `<span id="divTalpa${2}" class="divTalpa"></span>`;
             // timeIdTalpa2 = setInterval(mostraTalpa, Math.floor(Math.random() * (400 - 0) + 0) + tempoMedioTalpa, 2);
-            timeIdTalpa2 = setInterval(mostraTalpa, 2000, 2);
+            timeIdTalpa2 = setInterval(mostraTalpa, 1800, 2);
             clearInterval(timeIdTalpa3);
             document.getElementById("contenutoreGioco").innerHTML += `<span id="divTalpa${3}" class="divTalpa"></span>`;
             // timeIdTalpa3 = setInterval(mostraTalpa, Math.floor(Math.random() * (1000 - 0) + 0) + tempoMedioTalpa, 3);
-            timeIdTalpa3 = setInterval(mostraTalpa, 5000, 3);
+            timeIdTalpa3 = setInterval(mostraTalpa, 3000, 3);
         }
     }
 
     this.imposta = function (difficoltaScelta) {
+        difficolta = difficoltaScelta;
         if (difficoltaScelta == "facile") {
             dimensioneTalpa = 120;
             tempoMedioTalpa = 1500;
             numeroTalpe = 1;
+            tempoRimanente = 180;
         } else if (difficoltaScelta == "normale") {
             dimensioneTalpa = 100;
             tempoMedioTalpa = 1200;
             numeroTalpe = 1;
+            tempoRimanente = 120;
         } else if (difficoltaScelta == "difficile") {
             dimensioneTalpa = 90;
-            tempoMedioTalpa = 4000;
+            tempoMedioTalpa = 3000;
             numeroTalpe = 3;
+            tempoRimanente = 120;
         }
     }
 
@@ -95,10 +111,26 @@ function ColpisciLaTalpa() {
         document.getElementById("box-3-punti").innerHTML = `<strong>Punti ottenuti: </strong>${punti}`;
     }
 
+    let tempoDiGiocoEsaurito = function () {
+        document.getElementById("row-3").innerHTML = `<div class="alert alert-success" id="vittoria-sconfitta">` +
+            `<strong>Tempo terminato! Hai ottenuto ${punti} punti!</strong>` +
+            '</div>';
+        colpisciLaTalpa.terminaPartita();
+        for (let i = 0; i < numeroTalpe; i++) {
+            document.getElementById(`talpa${i + 1}`).onclick = null;
+        }
+        creaTastoRigioca();
+    }
+
     this.terminaPartita = function () {
+        clearInterval(timeIdTempoRimanente);
         clearInterval(timeIdTalpa1);
         clearInterval(timeIdTalpa2);
         clearInterval(timeIdTalpa3);
+    }
+
+    this.difficoltaPartitaPrecedente = function () {
+        return difficolta;
     }
 
 
@@ -126,8 +158,8 @@ function creaScheletro() {
         '<div class="col-3 alert alert-secondary" id="box-3">' +
         '<div id="box-3-punti">' +
         '</div>' +
-        // '<div id="box-3-aumento">' +
-        // '</div>' +
+        '<div id="box-3-tempoRimanente">' +
+        '</div>' +
         '</div>' +
         '</div>' +
         '<div class="row" id="row-3">' +
@@ -171,4 +203,16 @@ function tornaAlMenu() {
     document.getElementById("container").remove();
     colpisciLaTalpa.terminaPartita();
     crea();
+}
+
+function creaTastoRigioca() {
+    document.getElementById("box-1").innerHTML += '<div class="bottone-menù" onclick="rigioca()">' +
+        '<button id="bottone-rigioca">RIGIOCA</button>' +
+        '</div>';
+}
+
+function rigioca() {
+    document.getElementById("container").remove();
+    creaScheletro();
+    start(colpisciLaTalpa.difficoltaPartitaPrecedente());
 }

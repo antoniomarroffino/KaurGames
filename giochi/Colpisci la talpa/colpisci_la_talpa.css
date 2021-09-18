@@ -91,8 +91,7 @@ button:hover {
     border: transparent;
 }
 
-#vittoria,
-#sconfitta {
+#vittoria-sconfitta {
     border-radius: 8px;
     font-family: "Comic Sans MS";
     font-size: 3.0em;
@@ -134,7 +133,8 @@ button:hover {
     padding: 30px;
 }
 
-#box-3-punti {
+#box-3-punti,
+#box-3-tempoRimanente {
     font: bold 22px arial, serif;
     padding: 10px;
     border-radius: 2%;
