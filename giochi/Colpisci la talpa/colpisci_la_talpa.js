@@ -4,34 +4,90 @@ function ColpisciLaTalpa() {
     let dimensioneTalpa;
     let altezzaCampo;
     let lunghezzaCampo;
-    let timeId;
+    let timeIdTalpa1, timeIdTalpa2, timeIdTalpa3;
+    let tempoMedioTalpa;
+    let numeroTalpe;
+    let posizioneTalpe = [[0, 0], [0, 0], [0, 0]];
 
     this.creaStruttura = function () {
         punti = 0;
-        dimensioneTalpa = 100;
         altezzaCampo = 500;
         lunghezzaCampo = 600;
         document.getElementById("box-2").innerHTML = '<div id="contenutoreGioco"></div>'
         document.getElementById("contenutoreGioco").style.height = `${altezzaCampo}px`;
         document.getElementById("contenutoreGioco").style.width = `${lunghezzaCampo}px`;
 
-        clearInterval(timeId);
-        timeId = setInterval(mostraTalpa, 1500);
+        creaTalpe();
+    }
+    let creaTalpe = function () {
+        if (numeroTalpe == 1) {
+            clearInterval(timeIdTalpa1);
+            timeIdTalpa1 = setInterval(mostraTalpa, tempoMedioTalpa, 1);
+            document.getElementById("contenutoreGioco").innerHTML = `<span id="divTalpa${1}" class="divTalpa"></span>`;
+        }
+        else if (numeroTalpe == 3) {
+            clearInterval(timeIdTalpa1);
+            document.getElementById("contenutoreGioco").innerHTML = `<span id="divTalpa${1}" class="divTalpa"></span>`;
+            // timeIdTalpa1 = setInterval(mostraTalpa, Math.floor(Math.random() * (400 - 0) + 0) + tempoMedioTalpa, 1);
+            timeIdTalpa1 = setInterval(mostraTalpa, 1000, 1);
+            clearInterval(timeIdTalpa2);
+            document.getElementById("contenutoreGioco").innerHTML += `<span id="divTalpa${2}" class="divTalpa"></span>`;
+            // timeIdTalpa2 = setInterval(mostraTalpa, Math.floor(Math.random() * (400 - 0) + 0) + tempoMedioTalpa, 2);
+            timeIdTalpa2 = setInterval(mostraTalpa, 2000, 2);
+            clearInterval(timeIdTalpa3);
+            document.getElementById("contenutoreGioco").innerHTML += `<span id="divTalpa${3}" class="divTalpa"></span>`;
+            // timeIdTalpa3 = setInterval(mostraTalpa, Math.floor(Math.random() * (1000 - 0) + 0) + tempoMedioTalpa, 3);
+            timeIdTalpa3 = setInterval(mostraTalpa, 5000, 3);
+        }
     }
 
-    let mostraTalpa = function () {
+    this.imposta = function (difficoltaScelta) {
+        if (difficoltaScelta == "facile") {
+            dimensioneTalpa = 120;
+            tempoMedioTalpa = 1500;
+            numeroTalpe = 1;
+        } else if (difficoltaScelta == "normale") {
+            dimensioneTalpa = 100;
+            tempoMedioTalpa = 1200;
+            numeroTalpe = 1;
+        } else if (difficoltaScelta == "difficile") {
+            dimensioneTalpa = 90;
+            tempoMedioTalpa = 4000;
+            numeroTalpe = 3;
+        }
+    }
+
+    let mostraTalpa = function (numeroTalpa) {
         let xTalpa, yTalpa;
-        xTalpa = Math.floor(Math.random() * (lunghezzaCampo - dimensioneTalpa) + 0);
-        yTalpa = Math.floor(Math.random() * (altezzaCampo - dimensioneTalpa) + 0);
+        let valido = false;
+        do {
+            xTalpa = Math.floor(Math.random() * (lunghezzaCampo - 40 - dimensioneTalpa) + 0);
+            yTalpa = Math.floor(Math.random() * (altezzaCampo - 40 - dimensioneTalpa) + 0);
+            if (numeroTalpe == 1) valido = true;
+            else if (posizioneValida(xTalpa, yTalpa, numeroTalpa)) valido = true;
+        } while (valido == false);
 
-        document.getElementById("contenutoreGioco").innerHTML = `<img id="talpa1" class="talpa" height="${dimensioneTalpa}" width="${dimensioneTalpa}">`;
-        document.getElementsByClassName("talpa")[0].style.left = `${xTalpa}px`;
-        document.getElementsByClassName("talpa")[0].style.top = `${yTalpa}px`;
-        document.getElementById("talpa1").onclick = function () { colpisciLaTalpa.talpaPresa(); };
+        posizioneTalpe[numeroTalpa - 1][0] = xTalpa;
+        posizioneTalpe[numeroTalpa - 1][1] = yTalpa;
+
+        document.getElementById(`divTalpa${numeroTalpa}`).innerHTML = `<img id="talpa${numeroTalpa}" class="talpa" height="${dimensioneTalpa}" width="${dimensioneTalpa}">`;
+        document.getElementById(`talpa${numeroTalpa}`).style.left = `${xTalpa}px`;
+        document.getElementById(`talpa${numeroTalpa}`).style.top = `${yTalpa}px`;
+        document.getElementById(`talpa${numeroTalpa}`).onclick = function () { colpisciLaTalpa.talpaPresa(numeroTalpa); };
+    }
+    let posizioneValida = function (xTalpa, yTalpa, numeroTalpa) {
+        for (let i = 0; i < 3; i++) {
+            if (i != numeroTalpa - 1) {
+                if (Math.abs(xTalpa - posizioneTalpe[i][0]) < dimensioneTalpa && Math.abs(yTalpa - posizioneTalpe[i][1]) < dimensioneTalpa) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
-    this.talpaPresa = function () {
-        document.getElementsByClassName("talpa")[0].className += " talpaColpita";
+    this.talpaPresa = function (numeroTalpa) {
+        document.getElementById(`talpa${numeroTalpa}`).className += " talpaColpita";
         aggiornaPunteggio();
     }
     let aggiornaPunteggio = function () {
@@ -40,7 +96,9 @@ function ColpisciLaTalpa() {
     }
 
     this.terminaPartita = function () {
-        clearInterval(timeId);
+        clearInterval(timeIdTalpa1);
+        clearInterval(timeIdTalpa2);
+        clearInterval(timeIdTalpa3);
     }
 
 
@@ -52,7 +110,6 @@ function crea() {
         '1 2 2 COLPISCI LA TALPA 2 2 9' +
         '</div>';
     creaScheletro();
-
 }
 
 function creaScheletro() {
@@ -78,20 +135,30 @@ function creaScheletro() {
         '</div>';
 }
 
+
 function gioca() {
+    var strEasy = "facile";
+    var strNormal = "normale";
+    var strHard = "difficile";
+
     document.getElementsByTagName("div")[1].remove();
+
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
 
-    start();
+    var str = '<div class="container alert alert-secondary" id="menù-container"><div class="row menu-scelta"><h2>Seleziona la modalità di gioco.</h2>' +
+        '<div class="row menu-scelta"><button class="btn" id="bottone-facile" onclick="start(\'' + strEasy + '\')">FACILE</button>' +
+        '<button class="btn" id="bottone-normale" onclick="start(\'' + strNormal + '\')">NORMALE</button>' +
+        '<button class="btn" id="bottone-difficile" onclick="start(\'' + strHard + '\')">DIFFICILE</button></div>' +
+        '</div>';
+    document.getElementById("box-2").innerHTML += str;
 }
 
-function start() {
+
+function start(difficoltaScelta) {
+    colpisciLaTalpa.imposta(difficoltaScelta);
     colpisciLaTalpa.creaStruttura();
-    // snake.settings();
-    // snake.posizionaTesta();
-    // snake.posizionaMela();
-    // document.getElementsByTagName("body")[0].onkeydown = snake.spostamento;
+
     document.getElementById("box-3").style.visibility = "visible";
     document.getElementById("box-3-punti").innerHTML = `<strong>Punti ottenuti: </strong>0`;
 

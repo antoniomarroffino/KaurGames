@@ -17,7 +17,7 @@
 }
 
 .talpa {
-    position: relative;
+    position: absolute;
     content: url(immagini/talpa.png);
     animation: animation_talpa 0.4s 1 ease;
 }
@@ -30,13 +30,12 @@
 }
 
 .talpaColpita {
-    position: relative;
+    position: absolute;
     content: url(immagini/talpa2.png);
 }
 
 .divTalpa {
     position: relative;
-    border: 1px solid yellow;
 }
 
 /* GRAFICA PAGINA */
@@ -148,3 +147,36 @@ button:hover {
     border-bottom: 10px solid rgb(100, 115, 129);
     border-collapse: separate;
 }
+
+h2 {
+    text-align: center;
+}
+
+#menù-container {
+    display: flex;
+    height: 300px;
+}
+
+.menu-scelta {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bottone-facile,
+#bottone-normale,
+#bottone-difficile {
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    border-radius: 8px;
+    padding: 1px 12px;
+    font-family: "Comic Sans MS";
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+
