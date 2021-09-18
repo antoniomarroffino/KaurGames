@@ -1,4 +1,6 @@
 const BOMBA = 9;
+const MAX_BANDIERE = 100;
+const STOP_SECONDA_CHANCE = 20;
 
 var matriceFacile = [
     [0, 0, 0, 0, 0, 0, 0, 0, ],
@@ -52,6 +54,9 @@ campoMinato.creaTabella = function(righe, colonne, classe) {
     campoMinato.rigioca = false;
     campoMinato.partitaTerminata = false;
     campoMinato.bandieraAttiva = false;
+    campoMinato.timing = 200;
+    campoMinato.contatore = 0;
+    campoMinato.secondaChance = false;
     var cont = 0;
     if (campoMinato.righe == 8)
         campoMinato.matrice = matriceFacile;
@@ -62,12 +67,9 @@ campoMinato.creaTabella = function(righe, colonne, classe) {
 
     campoMinato.azzeraMatrice();
 
-    if (campoMinato.righe == 8)
-        campoMinato.appoggio = matriceFacile;
-    else if (campoMinato.righe == 10)
-        campoMinato.appoggio = matriceNormale;
-    else
-        campoMinato.appoggio = matriceDifficile;
+    campoMinato.numeroBandiere = 0;
+    campoMinato.appoggioBandiereR = new Array;
+    campoMinato.appoggioBandiereC = new Array;
 
     var str = '<table align="center">';
     for (var r = 0; r < campoMinato.righe; r++) {
@@ -197,22 +199,60 @@ campoMinato.isBombaTrovata = function() {
     if (campoMinato.bombaScoperta)
         sconfitta();
 }
+campoMinato.bandieraNonPresente = function(r, c) {
+    if (campoMinato.numeroBandiere != 0) {
+        for (var i = 0; i < campoMinato.numeroBandiere; i++) {
+            if (campoMinato.appoggioBandiereR[i] == r && campoMinato.appoggioBandiereC[i] == c) //bandiera già presente
+                return i; //bandiera presente
+        }
+    }
+    return MAX_BANDIERE;
+}
+
+
+campoMinato.possoScoprire = function(r, c) {
+    for (var i = 0; i < campoMinato.numeroBandiere; i++) {
+        if (campoMinato.appoggioBandiereR[i] == r && campoMinato.appoggioBandiereC[i] == c) //bandiera già presente
+            return false;
+    }
+    return true;
+}
 
 campoMinato.scopri = function(idCasella)  {
     var maxR = campoMinato.righe - 1;
     var pos = parseInt(idCasella);
     var r = parseInt(pos / campoMinato.righe);
     var c = pos % campoMinato.righe;
+    var n = campoMinato.bandieraNonPresente(r, c);
+    if (campoMinato.contatore >= STOP_SECONDA_CHANCE) {
+        clearInterval(campoMinato.bonus);
+        document.getElementById("box-3-secondaChance").style.visibility = "hidden";
+        document.getElementById("box-3-secondaChance").style.display = "none";
+    }
 
-    if (campoMinato.bandieraAttiva) {
-        if (campoMinato.appoggio[r][c] == 0) {
-            document.getElementsByTagName('td')[idCasella].innerHTML = '<img class="mina" src="immagini/bandiera.png">';
-            campoMinato.appoggio[r][c] = 1;
-        } else {
+    if (campoMinato.bandieraAttiva) { //sono in modalità bandiere
+        if (n == MAX_BANDIERE) { //casella vuota quindi piazzo la bandiera
+            if (campoMinato.numeroBandiere <= campoMinato.numeroMine) {
+                document.getElementsByTagName('td')[idCasella].innerHTML = '<img class="mina" src="immagini/bandiera.png">';
+                campoMinato.appoggioBandiereR[campoMinato.numeroBandiere] = r;
+                campoMinato.appoggioBandiereC[campoMinato.numeroBandiere] = c;
+                campoMinato.numeroBandiere++;
+            }
+        } else { //tolgo la bandiera dalla casella perchè c'è già
             document.getElementsByTagName('td')[idCasella].innerHTML = ' ';
-            campoMinato.appoggio[r][c] = 0;
+            for (var i = n; i < campoMinato.numeroBandiere; i++)
+                if (i != campoMinato.numeroBandiere - 1) {
+                    campoMinato.appoggioBandiereR[i] = campoMinato.appoggioBandiereR[i + 1];
+                    campoMinato.appoggioBandiereC[i] = campoMinato.appoggioBandiereC[i + 1];
+                }
+
+            campoMinato.appoggioBandiereR[i] = 0;
+            campoMinato.appoggioBandiereC[i] = 0;
+            campoMinato.numeroBandiere--;
+
         }
-    } else {
+        document.getElementById("box-3-numeroMine").innerHTML = "<strong>Numero mine:</strong> " + (campoMinato.numeroMine - campoMinato.numeroBandiere);
+    } else if (campoMinato.possoScoprire(r, c)) { //se non c'è la bandiera scopro la casella
         campoMinato.scopriCasella(pos, r, c);
 
         if (campoMinato.matrice[r][c] == 0) {
@@ -253,8 +293,14 @@ campoMinato.scopriCasella = function(idCasella, r, c) {
         if (campoMinato.matrice[r][c] == '*') {
             if (campoMinato.contMosse != 0)
                 campoMinato.bombaScoperta = true;
-            campoMinato.contCaselle++; //se è la prima volta
-
+            else {
+                campoMinato.secondaChance = true;
+                document.getElementById("box-3-secondaChance").style.visibility = "visible";
+                document.getElementById("box-3-secondaChance").style.display = "block";
+                campoMinato.bonus = setInterval(campoMinato.mostraSecondaChance, campoMinato.timing);
+                campoMinato.numeroMine--;
+                document.getElementById("box-3-numeroMine").innerHTML = "<strong>Numero mine:</strong> " + campoMinato.numeroMine;
+            }
             document.getElementsByTagName('td')[idCasella].innerHTML += '<img class="mina" src="immagini/bomba.png">';
         }
 
@@ -267,6 +313,15 @@ campoMinato.scopriCasella = function(idCasella, r, c) {
     }
 }
 
+campoMinato.mostraSecondaChance = function() {
+    if (campoMinato.contatore % 2 == 0)
+        document.getElementById("box-3-secondaChance").className = "scrittaRossa";
+    else
+        document.getElementById("box-3-secondaChance").className = "scrittaBianca";
+
+    document.getElementById("box-3-secondaChance").innerHTML = "Seconda chance!";
+    campoMinato.contatore++;
+}
 
 campoMinato.settings = function() {
     document.getElementById("box-3").style.visibility = "visible";
@@ -409,5 +464,7 @@ function creaScheletro() {
         '</div>' +
         '</div>' +
         '<div class="row" id="row-3">' +
+        '<div id="box-3-secondaChance">' +
+        '</div>' +
         '</div>';
 }

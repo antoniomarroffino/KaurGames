@@ -1,0 +1,25 @@
+#contenutoreGioco {
+    border: 1px solid green;
+    /* height: 500px;
+    width: 600px; */
+    background-image: url('immagini/prato2.jpg');
+    /* background-repeat: no-repeat; */
+    background-attachment: fixed;
+    /* background-size: cover; */
+    /* background-color: rgba(0, 0, 0, 0.5); */
+}
+
+.talpa {
+    position: relative;
+    content: url(immagini/talpa.png);
+}
+
+.talpaColpita {
+    position: relative;
+    content: url(immagini/talpa2.png);
+}
+
+.divTalpa {
+    position: relative;
+    border: 1px solid yellow;
+}
