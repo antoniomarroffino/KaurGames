@@ -168,18 +168,3 @@ button:hover {
 .scrittaBianca {
     color: white;
 }
-
-#comeSiGioca {
-    display: flex;
-    justify-content: center;
-    text-decoration: underline;
-    color: black;
-    padding: 20px;
-    margin-top: 40%;
-    border: 2px solid rgb(0, 132, 221);
-    border-radius: 30%;
-}
-
-#comeSiGioca:hover {
-    background-color: #00b7ff;
-}

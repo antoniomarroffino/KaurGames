@@ -515,9 +515,6 @@ function gioca() {
     document.getElementsByTagName("div")[1].remove();
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
-    document.getElementById("comeSiGioca").style.display = 'none';
-    document.getElementById("comeSiGioca").style.visibility = "hidden";
-
     start();
 }
 
@@ -585,8 +582,6 @@ function creaScheletro() {
         '</div>' +
         '<div class="col-md-6" id="box-2">' +
         '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
-        '<div class="alert-primary" id="comeSiGioca" >Come si gioca?' +
-        '</div>' +
         '</div>' +
         '<div class="col-3 alert alert-secondary" id="box-3">' +
         '<div id="box-3-punti">' +

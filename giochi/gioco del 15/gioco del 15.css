@@ -1,11 +1,3 @@
-body {
-    background-image: url('../../img/sfondo.gif');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
 
 .titolo{
     font-size: 4vw;
@@ -56,10 +48,9 @@ td:active {
     background-color: rgb(102, 102, 102);
 } */
 
+/* GRAFICA */
+
 #bottone-gioca {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 4.0em;
     width: 300px;
     height: 100px;
@@ -70,12 +61,18 @@ td:active {
 }
 
 #bottone-tornaAlMenù,
-#bottone-rigioca {
+#bottone-rigioca,
+#bottone-gioca {
     width: 300px;
-    height: 100px;
+    height: auto;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
 }
-
-
 
 /*  */
 
@@ -95,9 +92,9 @@ button:hover {
 }
 
 #box-1 {
+    order: 1;
     display: flex;
     justify-content: center;
-    order: 1;
     flex-direction: column;
 }
 
@@ -106,15 +103,19 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 #box-3 {
-    justify-content: center;
-    color: aliceblue;
-    font-size: 2em;
     order: 3;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     visibility: hidden;
-    width: 300px;
+    width: 200px;
+    height: 100%;
+    background-color: transparent;
+    border: transparent;
 }
 
 .bottone-menù {
@@ -130,12 +131,28 @@ button:hover {
 }
 
 #row-2 {
+    display: flex;
+    justify-content: center;
     padding-top: 50px;
+    padding: 50px;
 }
 
 #row-3 {
     display: flex;
     justify-content: center;
-    padding-top: 50px;
 }
 
+#box-3-mosseEffettuate,
+#box-3-tempoTrascorso {
+    font: bold 22px arial, serif;
+    padding: 10px;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    background-color: rgb(169, 198, 223);
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
+    border-collapse: separate;
+}

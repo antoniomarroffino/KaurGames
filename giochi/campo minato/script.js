@@ -405,6 +405,8 @@ function togliOnClick() {
             document.getElementById(cont).removeAttribute("onclick");
             cont++;
         }
+
+    document.getElementById("box-3-onOff").removeAttribute("onclick");
 }
 
 function creaTastoRigioca() {

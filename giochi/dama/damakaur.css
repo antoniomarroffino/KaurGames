@@ -1,0 +1,5 @@
+td{border:5px solid black;height:60px;width:60px;display:flex;justify-content:center;align-items:center;}
+.pedinawhite{height:85%;width:85%;background-color:white;border:1px solid black;border-radius:100%;}
+.pedinablack{height:85%;width:85%;background-color:black;border:1px solid white;border-radius:100%;}
+table{border:10px solid black}
+tr{display:flex;flex-direction:row;}

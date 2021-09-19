@@ -194,7 +194,8 @@ button:hover {
 }
 
 #box-3-tempoTrascorso,
-#box-3-mosseEffettuate {
+#box-3-mosseEffettuate,
+#box-3-puntiOttenuti {
     font: bold 22px arial, serif;
     background-color: gray;
     padding: 10px;

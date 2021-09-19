@@ -34,7 +34,6 @@ tris.creaTabella = function(classe) {
     document.getElementById('box-2').innerHTML += str;
 }
 
-
 tris.settings = function() {
     document.getElementById("box-3").style.visibility = "visible";
     document.getElementById("box-3-modalità").innerHTML = "<strong>Modalità:</strong> " + tris.modalita;
@@ -125,7 +124,7 @@ tris.assegna = function(casella) {
     }
 }
 
-tris.controlla = function() {
+tris.controlla = function() { //controllo se qualcuno ha vinto
     if (tris.matrice[0][0] == 'x' && tris.matrice[0][1] == 'x' && tris.matrice[0][2] == 'x' || tris.matrice[0][0] == 'o' && tris.matrice[0][1] == 'o' && tris.matrice[0][2] == 'o') {
         if (tris.matrice[0][0] != 0) {
             tris.segnaVittoria(0, 0, 0, 1, 0, 2);
@@ -210,10 +209,8 @@ tris.segnaVittoria = function(r1, c1, r2, c2, r3, c3) {
 }
 
 tris.mossaCPU = function() {
-    var r;
-    var c;
-    var caso;
-    var n;
+    var r, c, caso, n;
+
     if (tris.mossa == 1) {
         r = Math.floor(Math.random() * tris.righe);
         c = Math.floor(Math.random() * tris.colonne);
@@ -377,36 +374,31 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore2) {
+            } else if (tris.matrice[0][2] == tris.giocatore2) {
                 if (tris.matrice[0][1] == 0) {
                     r = 0;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][0] == tris.giocatore2) {
+            } else if (tris.matrice[1][0] == tris.giocatore2) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore2) {
+            } else if (tris.matrice[2][0] == tris.giocatore2) {
                 if (tris.matrice[1][0] == 0) {
                     r = 1;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore2) {
+            } else if (tris.matrice[1][1] == tris.giocatore2) {
                 if (tris.matrice[2][2] == 0) {
                     r = 2;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore2) {
+            } else if (tris.matrice[2][2] == tris.giocatore2) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
@@ -420,36 +412,31 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore1) {
+            } else if (tris.matrice[0][2] == tris.giocatore1) {
                 if (tris.matrice[0][1] == 0) {
                     r = 0;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][0] == tris.giocatore1) {
+            } else if (tris.matrice[1][0] == tris.giocatore1) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore1) {
+            } else if (tris.matrice[2][0] == tris.giocatore1) {
                 if (tris.matrice[1][0] == 0) {
                     r = 1;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore1) {
+            } else if (tris.matrice[1][1] == tris.giocatore1) {
                 if (tris.matrice[2][2] == 0) {
                     r = 2;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore1) {
+            } else if (tris.matrice[2][2] == tris.giocatore1) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
@@ -464,22 +451,19 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore2) {
+            } else if (tris.matrice[0][2] == tris.giocatore2) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore2) {
+            } else if (tris.matrice[1][1] == tris.giocatore2) {
                 if (tris.matrice[2][1] == 0) {
                     r = 2;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][1] == tris.giocatore2) {
+            } else if (tris.matrice[2][1] == tris.giocatore2) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
@@ -493,22 +477,19 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore1) {
+            } else if (tris.matrice[0][2] == tris.giocatore1) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore1) {
+            } else if (tris.matrice[1][1] == tris.giocatore1) {
                 if (tris.matrice[2][1] == 0) {
                     r = 2;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][1] == tris.giocatore1) {
+            } else if (tris.matrice[2][1] == tris.giocatore1) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
@@ -523,36 +504,31 @@ tris.mossaCPU = function() {
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][1] == tris.giocatore2) {
+            } else if (tris.matrice[0][1] == tris.giocatore2) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][2] == tris.giocatore2) {
+            } else if (tris.matrice[1][2] == tris.giocatore2) {
                 if (tris.matrice[2][2] == 0) {
                     r = 2;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore2) {
+            } else if (tris.matrice[2][2] == tris.giocatore2) {
                 if (tris.matrice[1][2] == 0) {
                     r = 1;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore2) {
+            } else if (tris.matrice[1][1] == tris.giocatore2) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore2) {
+            } else if (tris.matrice[2][0] == tris.giocatore2) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
@@ -566,36 +542,31 @@ tris.mossaCPU = function() {
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][1] == tris.giocatore1) {
+            } else if (tris.matrice[0][1] == tris.giocatore1) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][2] == tris.giocatore1) {
+            } else if (tris.matrice[1][2] == tris.giocatore1) {
                 if (tris.matrice[2][2] == 0) {
                     r = 2;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore1) {
+            } else if (tris.matrice[2][2] == tris.giocatore1) {
                 if (tris.matrice[1][2] == 0) {
                     r = 1;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore1) {
+            } else if (tris.matrice[1][1] == tris.giocatore1) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore1) {
+            } else if (tris.matrice[2][0] == tris.giocatore1) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
@@ -610,22 +581,19 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][2] == tris.giocatore2) {
+            } else if (tris.matrice[1][2] == tris.giocatore2) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][0] == tris.giocatore2) {
+            } else if (tris.matrice[0][0] == tris.giocatore2) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore2) {
+            } else if (tris.matrice[2][0] == tris.giocatore2) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
@@ -639,22 +607,19 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][2] == tris.giocatore1) {
+            } else if (tris.matrice[1][2] == tris.giocatore1) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][0] == tris.giocatore1) {
+            } else if (tris.matrice[0][0] == tris.giocatore1) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore1) {
+            } else if (tris.matrice[2][0] == tris.giocatore1) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
@@ -669,50 +634,43 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][2] == tris.giocatore2) {
+            } else if (tris.matrice[1][2] == tris.giocatore2) {
                 if (tris.matrice[1][0] == 0) {
                     r = 1;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][0] == tris.giocatore2) {
+            } else if (tris.matrice[0][0] == tris.giocatore2) {
                 if (tris.matrice[2][2] == 0) {
                     r = 2;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore2) {
+            } else if (tris.matrice[2][2] == tris.giocatore2) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore2) {
+            } else if (tris.matrice[0][2] == tris.giocatore2) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore2) {
+            } else if (tris.matrice[2][0] == tris.giocatore2) {
                 if (tris.matrice[0][2] == 0) {
                     r = 0;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][1] == tris.giocatore2) {
+            } else if (tris.matrice[0][1] == tris.giocatore2) {
                 if (tris.matrice[2][1] == 0) {
                     r = 2;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][1] == tris.giocatore2) {
+            } else if (tris.matrice[2][1] == tris.giocatore2) {
                 if (tris.matrice[0][1] == 0) {
                     r = 0;
                     c = 1;
@@ -726,50 +684,43 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][2] == tris.giocatore1) {
+            } else if (tris.matrice[1][2] == tris.giocatore1) {
                 if (tris.matrice[1][0] == 0) {
                     r = 1;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][0] == tris.giocatore1) {
+            } else if (tris.matrice[0][0] == tris.giocatore1) {
                 if (tris.matrice[2][2] == 0) {
                     r = 2;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore1) {
+            } else if (tris.matrice[2][2] == tris.giocatore1) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore1) {
+            } else if (tris.matrice[0][2] == tris.giocatore1) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore1) {
+            } else if (tris.matrice[2][0] == tris.giocatore1) {
                 if (tris.matrice[0][2] == 0) {
                     r = 0;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][1] == tris.giocatore1) {
+            } else if (tris.matrice[0][1] == tris.giocatore1) {
                 if (tris.matrice[2][1] == 0) {
                     r = 2;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][1] == tris.giocatore1) {
+            } else if (tris.matrice[2][1] == tris.giocatore1) {
                 if (tris.matrice[0][1] == 0) {
                     r = 0;
                     c = 1;
@@ -784,22 +735,19 @@ tris.mossaCPU = function() {
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][0] == tris.giocatore2) {
+            } else if (tris.matrice[1][0] == tris.giocatore2) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore2) {
+            } else if (tris.matrice[0][2] == tris.giocatore2) {
                 if (tris.matrice[2][2] == 0) {
                     r = 2;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore2) {
+            } else if (tris.matrice[2][2] == tris.giocatore2) {
                 if (tris.matrice[0][2] == 0) {
                     r = 0;
                     c = 2;
@@ -813,22 +761,19 @@ tris.mossaCPU = function() {
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][0] == tris.giocatore1) {
+            } else if (tris.matrice[1][0] == tris.giocatore1) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore1) {
+            } else if (tris.matrice[0][2] == tris.giocatore1) {
                 if (tris.matrice[2][2] == 0) {
                     r = 2;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore1) {
+            } else if (tris.matrice[2][2] == tris.giocatore1) {
                 if (tris.matrice[0][2] == 0) {
                     r = 0;
                     c = 2;
@@ -843,36 +788,31 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore2) {
+            } else if (tris.matrice[2][2] == tris.giocatore2) {
                 if (tris.matrice[2][1] == 0) {
                     r = 2;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore2) {
+            } else if (tris.matrice[1][1] == tris.giocatore2) {
                 if (tris.matrice[0][2] == 0) {
                     r = 0;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore2) {
+            } else if (tris.matrice[0][2] == tris.giocatore2) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][0] == tris.giocatore2) {
+            } else if (tris.matrice[0][0] == tris.giocatore2) {
                 if (tris.matrice[1][0] == 0) {
                     r = 1;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][0] == tris.giocatore2) {
+            } else if (tris.matrice[1][0] == tris.giocatore2) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
@@ -886,36 +826,31 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore1) {
+            } else if (tris.matrice[2][2] == tris.giocatore1) {
                 if (tris.matrice[2][1] == 0) {
                     r = 2;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore1) {
+            } else if (tris.matrice[1][1] == tris.giocatore1) {
                 if (tris.matrice[0][2] == 0) {
                     r = 0;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore1) {
+            } else if (tris.matrice[0][2] == tris.giocatore1) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][0] == tris.giocatore1) {
+            } else if (tris.matrice[0][0] == tris.giocatore1) {
                 if (tris.matrice[1][0] == 0) {
                     r = 1;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][0] == tris.giocatore1) {
+            } else if (tris.matrice[1][0] == tris.giocatore1) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
@@ -930,22 +865,19 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore2) {
+            } else if (tris.matrice[2][2] == tris.giocatore2) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][1] == tris.giocatore2) {
+            } else if (tris.matrice[0][1] == tris.giocatore2) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore2) {
+            } else if (tris.matrice[1][1] == tris.giocatore2) {
                 if (tris.matrice[0][1] == 0) {
                     r = 0;
                     c = 1;
@@ -959,22 +891,19 @@ tris.mossaCPU = function() {
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][2] == tris.giocatore1) {
+            } else if (tris.matrice[2][2] == tris.giocatore1) {
                 if (tris.matrice[2][0] == 0) {
                     r = 2;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][1] == tris.giocatore1) {
+            } else if (tris.matrice[0][1] == tris.giocatore1) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore1) {
+            } else if (tris.matrice[1][1] == tris.giocatore1) {
                 if (tris.matrice[0][1] == 0) {
                     r = 0;
                     c = 1;
@@ -989,36 +918,31 @@ tris.mossaCPU = function() {
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore2) {
+            } else if (tris.matrice[2][0] == tris.giocatore2) {
                 if (tris.matrice[2][1] == 0) {
                     r = 2;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore2) {
+            } else if (tris.matrice[1][1] == tris.giocatore2) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][0] == tris.giocatore2) {
+            } else if (tris.matrice[0][0] == tris.giocatore2) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore2) {
+            } else if (tris.matrice[0][2] == tris.giocatore2) {
                 if (tris.matrice[1][2] == 0) {
                     r = 1;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][2] == tris.giocatore2) {
+            } else if (tris.matrice[1][2] == tris.giocatore2) {
                 if (tris.matrice[0][2] == 0) {
                     r = 0;
                     c = 2;
@@ -1032,36 +956,31 @@ tris.mossaCPU = function() {
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[2][0] == tris.giocatore1) {
+            } else if (tris.matrice[2][0] == tris.giocatore1) {
                 if (tris.matrice[2][1] == 0) {
                     r = 2;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][1] == tris.giocatore1) {
+            } else if (tris.matrice[1][1] == tris.giocatore1) {
                 if (tris.matrice[0][0] == 0) {
                     r = 0;
                     c = 0;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][0] == tris.giocatore1) {
+            } else if (tris.matrice[0][0] == tris.giocatore1) {
                 if (tris.matrice[1][1] == 0) {
                     r = 1;
                     c = 1;
                     caso++;
                 }
-            }
-            if (tris.matrice[0][2] == tris.giocatore1) {
+            } else if (tris.matrice[0][2] == tris.giocatore1) {
                 if (tris.matrice[1][2] == 0) {
                     r = 1;
                     c = 2;
                     caso++;
                 }
-            }
-            if (tris.matrice[1][2] == tris.giocatore1) {
+            } else if (tris.matrice[1][2] == tris.giocatore1) {
                 if (tris.matrice[0][2] == 0) {
                     r = 0;
                     c = 2;
@@ -1281,7 +1200,7 @@ tris.controllaMatricePiena = function() {
             creaTastoRigioca();
             pareggio();
         }
-
+        //se la matrice è piena finisce la partita
         tris.finePartita = true;
     }
 
@@ -1404,7 +1323,6 @@ function start(tdClass) {
     tris.creaTabella(tdClass);
     tris.settings();
     tris.chiDeveIniziare();
-    //document.getElementById("row-3").innerHTML = " ";
     document.getElementById("box-1").innerHTML = '<div class="button bottone-menù" onclick="tornaAlMenu()">' +
         '<button id="bottone-tornaAlMenù">TORNA AL MENU</button>' +
         '</div>';
@@ -1494,8 +1412,6 @@ function creaScheletro() {
         '</div>' +
         '<div class="col-3 alert alert-secondary" id="box-3">' +
         '<div id="box-3-modalità">' +
-        '</div>' +
-        '<div id="box-3-scelta">' +
         '</div>' +
         '</div>' +
         '</div>' +
