@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../headerFooter.js"></script>
     <title>KaurGames</title>
@@ -21,6 +22,70 @@
             background-size: cover;
             background-color: rgba(0, 0, 0, 0.5);
         }
+
+        .titolo1 {
+            font-family: "Comic Sans MS";
+            font-weight: bold;
+            text-align: center;
+            font-size: 30px;
+            padding: 20px;
+        }
+
+        #divCont {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgb(197, 215, 242);
+            /* height: 1000px; */
+            padding: 10px;
+            margin: 5%;
+            border-radius: 20px;
+            opacity: 0.98;
+        }
+
+        .containerAutori {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* border: 1px solid black; */
+            font-family: "Comic Sans MS";
+            font-weight: bold;
+            /* max-width: 1000px; */
+            font-size: 30px;
+            padding: 10px;
+        }
+
+        .elencoAutori {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* border: 1px solid black; */
+        }
+
+        .autore {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            border: 1px solid gray;
+            /* padding: 40px; */
+            width: 100%;
+            border-radius: 50px;
+            margin: 10px;
+            background-color: rgb(225, 234, 247);
+        }
+
+        .immagineProfilo {
+            max-width: 150px;
+            min-width: 25px;
+            margin: 20px;
+            border-radius: 100px;
+        }
+        .nomeAutore{
+            margin: 10px;
+        }
+
     </style>
 
 </head>
@@ -39,6 +104,34 @@
     </div>
 
 
+    <div id="divCont" class="">
+        <div>
+            <!-- Questo sito è stato realizzato da 4 ragazzi della 5INF3 -->
+        </div>
+        <div class="containerAutori">
+            <div class="titolo1">Questo sito è stato realizzato da 4 ragazzi della 5INF3:</div>
+            <div class="elencoAutori">
+                <div class="autore">
+                    <div class="nomeAutore">Marroffino Antonio</div>
+                    <img class="immagineProfilo" src="../img/fotoProfilo.jpg">
+                </div>
+                <div class="autore">
+                    <img class="immagineProfilo" src="../img/fotoProfilo.jpg">
+                    <div class="nomeAutore">Martucci Flavio</div>
+                </div>
+                <div class="autore">
+                    <div class="nomeAutore">Pirotta Dennis</div>
+                    <img class="immagineProfilo" src="../img/fotoProfilo.jpg">
+                </div>
+                <div class="autore">
+                    <img class="immagineProfilo" src="../img/fotoProfilo.jpg">
+                    <div class="nomeAutore">Gaffuri Pietro</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 
@@ -48,7 +141,9 @@
         </script>
     </footer>
     <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
