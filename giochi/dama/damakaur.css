@@ -23,6 +23,22 @@ td {
     border-radius: 100%;
 }
 
+.damawhite {
+    height: 90%;
+    width: 90%;
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 100%;
+}
+
+.damablack {
+    height: 90%;
+    width: 90%;
+    background-color: black;
+    border: 5px solid white;
+    border-radius: 100%;
+}
+
 table {
     border: 10px solid black
 }
@@ -124,8 +140,7 @@ button:hover {
     padding: 30px;
 }
 
-#box-3-punti,
-#box-3-tempoRimanente {
+#box-3-tempoTrascorso {
     font: bold 22px arial, serif;
     padding: 10px;
     border-radius: 2%;
