@@ -39,3 +39,33 @@ button {
     font-family: NomeGioco;
     src: url("./font/Beyond Wonderland.ttf");
 }
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#logoImg {
+    width: 90%;
+    height: 90%;
+}
+
+.logoFooter {
+    width: 100px;
+    height: 100px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright {
+    border-top: 2px solid grey;
+}
+
+.active {
+    background-color: grey;
+}
