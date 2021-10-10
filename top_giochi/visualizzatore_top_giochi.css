@@ -1,0 +1,62 @@
+.titoloPiuGiocati {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Comic Sans MS";
+    font-weight: bold;
+    font-size: 30px;
+    padding: 10px;
+}
+
+#contenitoreGiochiPiuGiocati {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0px 5%;
+    margin-top: -40px;
+    margin-bottom: 20px;
+    border-radius: 0px 0px 30px 30px;
+    /* width: 600px;
+    height: 500px; */
+    background-color: rgb(197, 215, 242);
+    /* margin-left: auto;
+    margin-right: auto; */
+    /* padding: 10px; */
+    overflow: hidden;
+    opacity: 0.97;
+}
+
+.divImmagine {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.nomeGioco {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    /* align-items: space-around;
+    justify-content: space-around; */
+    font-family: "Comic Sans MS";
+    font-weight: bold;
+    font-size: 40px;
+    min-width: 350px;
+}
+.immagine {
+    padding: 25px;
+    padding-top: 0;
+    height: 350px;
+    /* width: 50%; */
+    width: 350px;
+}
+.bottoniAvantiIndietro {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
