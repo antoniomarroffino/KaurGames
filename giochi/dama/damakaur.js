@@ -1,12 +1,13 @@
 function GiocoDama() {
 	let turno;
-	let tocco1 = false;
-	let tocco2 = false;
-	let rtocco1;
-	let ctocco1;
-	let rtocco2;
-	let ctocco2;
-	var lato = 8;
+	let toccoEffettuato;
+	// let rtocco1;
+	// let ctocco1;
+	// let rtocco2;
+	// let ctocco2;
+	let rTocco;
+	let cTocco;
+	let lato = 8;
 	let matrice =
 		[[1, 0, 1, 0, 1, 0, 1, 0],
 		[0, 1, 0, 1, 0, 1, 0, 1],
@@ -26,12 +27,11 @@ function GiocoDama() {
 			[0, 2, 0, 2, 0, 2, 0, 2],
 			[2, 0, 2, 0, 2, 0, 2, 0],
 			[0, 2, 0, 2, 0, 2, 0, 2]];
-		tocco1 = false;
-		tocco2 = false;
-		var colore;
-		var j = 0;
+		toccoEffettuato = 0;
+		let colore;
+		let j = 0;
 		let cont = 0;
-		var strTab = "<table>";
+		let strTab = "<table>";
 		for (let c = 0; c < lato; c++) {
 			j++;
 			strTab += "<tr>"
@@ -90,141 +90,139 @@ function GiocoDama() {
 	}
 
 	this.muovi = function (cellaid) {
-
 		let r = parseInt(cellaid / lato);
 		let c = cellaid % lato;
-		if (tocco1 == false) {
-			rtocco1 = r;
-			ctocco1 = c;
-		}
-		if (tocco2 == false) {
-			rtocco2 = r;
-			ctocco2 = c;
-		}
-
-		if (matrice[r][c] == 1 && turno == 1) {
-			tocco1 = true;
-		}
-		else if (matrice[r][c] == 2 && turno == 2) {
-			tocco2 = true;
-		}
-		if (tocco1) {
-			if (matrice[r][c] == 0) {
-				if (vicino(r, c, 1)) {
-					let temp = matrice[r][c];
-					matrice[r][c] = matrice[rtocco1][ctocco1];
-					matrice[rtocco1][ctocco1] = temp;
-					tocco1 = false;
-				}
-				else {
-					mangia1(r, c);
-				}
-			}
-			else if (matrice[r][c] == 1) {
-				rtocco1 = r;
-				ctocco1 = c;
-			}
-			turno = 2;
-		}
-
-		if (tocco2) {
-			if (matrice[r][c] == 0) {
-				if (vicino(r, c, 2)) {
-					let temp = matrice[r][c];
-					matrice[r][c] = matrice[rtocco2][ctocco2];
-					matrice[rtocco2][ctocco2] = temp;
-					tocco2 = false;
-				}
-				else {
-					mangia2(r, c);
-				}
-			}
-			else if (matrice[r][c] == 2) {
-				rtocco2 = r;
-				ctocco2 = c;
-			}
-			turno = 1;
-		}
-		this.posiziona();
-		evidenzia();
-		vittoria();
-	}
-
-	let vicino = function (r, c, col) {
-		if (col == 1) {
-			if (Math.abs(ctocco1 - c) == 1 && r - rtocco1 == 1) {
-				return true;
+		if (toccoEffettuato == 0) {
+			rTocco = r;
+			cTocco = c;
+			if (matrice[r][c] == turno) {
+				toccoEffettuato = 1;
 			}
 		}
 		else {
-			if (Math.abs(ctocco2 - c) == 1 && rtocco2 - r == 1) {
+			if (turno == 1) {
+				spostaPedina(r, c, 1, rTocco, cTocco);
+			}
+			else if (turno == 2) {
+				spostaPedina(r, c, 2, rTocco, cTocco);
+			}
+		}
+
+		if (toccoEffettuato == 1) {
+			this.posiziona();
+			evidenzia(r, c);
+		}
+		vittoria();
+	}
+
+	let spostaPedina = function (r, c, giocatore, rPrec, cPrec) {
+		if (matrice[r][c] == 0) {
+			if (vicino(r, c, giocatore)) {
+				let temp = matrice[r][c];
+				matrice[r][c] = matrice[rPrec][cPrec];
+				matrice[rPrec][cPrec] = temp;
+				cambiaGiocatore();
+			}
+			else {
+				if (giocatore == 1) {
+					mangia1(r, c, rTocco, cTocco);
+				}
+				else if (giocatore == 2) {
+					mangia2(r, c, rTocco, cTocco);
+				}
+			}
+		}
+		else if (matrice[r][c] == giocatore) {
+			rTocco = r;
+			cTocco = c;
+		}
+	}
+
+
+	let cambiaGiocatore = function () {
+		toccoEffettuato = 0;
+		if (turno == 1) {
+			turno = 2;
+		}
+		else if (turno == 2) {
+			turno = 1;
+		}
+		giocodama.posiziona();
+	}
+
+	let vicino = function (r, c, giocatore) {
+		if (giocatore == 1) {
+			if (Math.abs(cTocco - c) == 1 && r - rTocco == 1) {
+				return true;
+			}
+		}
+		else if (giocatore == 2) {
+			if (Math.abs(cTocco - c) == 1 && rTocco - r == 1) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	let mangia1 = function (r, c) {
-		if (Math.abs(ctocco1 - c) == 2 && r - rtocco1 == 2) {
-			if (c > ctocco1) {
+	let mangia1 = function (r, c, rPrec, cPrec) {
+		if (Math.abs(cPrec - c) == 2 && r - rPrec == 2) {
+			if (c > cPrec) {
 				if (matrice[r - 1][c - 1] == 2) {
 					let temp = matrice[r][c];
-					matrice[r][c] = matrice[rtocco1][ctocco1];
-					matrice[rtocco1][ctocco1] = temp;
+					matrice[r][c] = matrice[rPrec][cPrec];
+					matrice[rPrec][cPrec] = temp;
 					matrice[r - 1][c - 1] = 0;
-					tocco1 = false;
+					cambiaGiocatore();
 				}
 			}
 			else {
 				if (matrice[r - 1][c + 1] == 2) {
 					let temp = matrice[r][c];
-					matrice[r][c] = matrice[rtocco1][ctocco1];
-					matrice[rtocco1][ctocco1] = temp;
+					matrice[r][c] = matrice[rPrec][cPrec];
+					matrice[rPrec][cPrec] = temp;
 					matrice[r - 1][c + 1] = 0;
-					tocco1 = false;
+					cambiaGiocatore();
 				}
 			}
 		}
-
-
 	}
 
-	let mangia2 = function (r, c) {
-		if (Math.abs(ctocco2 - c) == 2 && rtocco2 - r == 2) {
-			if (c > ctocco2) {
+	let mangia2 = function (r, c, rPrec, cPrec) {
+		if (Math.abs(cPrec - c) == 2 && rPrec - r == 2) {
+			if (c > cPrec) {
 				if (matrice[r + 1][c - 1] == 1) {
 					let temp = matrice[r][c];
-					matrice[r][c] = matrice[rtocco2][ctocco2];
-					matrice[rtocco2][ctocco2] = temp;
+					matrice[r][c] = matrice[rPrec][cPrec];
+					matrice[rPrec][cPrec] = temp;
 					matrice[r + 1][c - 1] = 0;
-					tocco2 = false;
+					cambiaGiocatore();
 				}
 			}
 			else {
 				if (matrice[r + 1][c + 1] == 1) {
 					let temp = matrice[r][c];
-					matrice[r][c] = matrice[rtocco2][ctocco2];
-					matrice[rtocco2][ctocco2] = temp;
+					matrice[r][c] = matrice[rPrec][cPrec];
+					matrice[rPrec][cPrec] = temp;
 					matrice[r + 1][c + 1] = 0;
-					tocco2 = false;
+					cambiaGiocatore();
 				}
 			}
 		}
-
-
 	}
 
-	let evidenzia = function () {
+	let evidenzia = function (r, c) {		// evidenzia la cella della pedina cliccata
 		let id;
-		if (tocco1 == true) {
-			id = (rtocco1 * lato) + ctocco1;
-			document.getElementById(id).style = "background-color:red";
+		if (toccoEffettuato == 1) {
+			if (turno == 1) {
+				id = (r * lato) + c;
+				document.getElementById(id).style = "background-color:red";
+			}
+			else if (turno == 2) {
+				id = (r * lato) + c;
+				document.getElementById(id).style = "background-color:red";
+			}
+			evidenziaMossePossibili(r, c, turno);	// evidenzia le mosse che è possibile effettuare
 		}
-		else if (tocco2 == true) {
-			id = (rtocco2 * lato) + ctocco2;
-			document.getElementById(id).style = "background-color:red";
-		}
-
 	}
 
 	let controlla = function (tipo) {
@@ -238,7 +236,7 @@ function GiocoDama() {
 		return true;
 	}
 
-	let vittoria = function () {
+	let vittoria = function () {			// controlla possibili vittorie
 		if (controlla(1)) {
 			console.log("ha vinto il giocatore 2");
 		}
@@ -246,6 +244,49 @@ function GiocoDama() {
 			console.log("ha vinto il giocatore 1");
 		}
 	}
+
+
+	let evidenziaMossePossibili = function (r, c, giocatore) {
+		let id;
+		if (giocatore == 1) {
+			if (matrice[r + 1][c + 1] == 0) {
+				id = ((r + 1) * lato) + c + 1;
+				document.getElementById(id).style = "background-color:green";
+			}
+			else if (matrice[r + 1][c + 1] == 2 && matrice[r + 2][c + 2] == 0) {
+				id = ((r + 2) * lato) + c + 2;
+				document.getElementById(id).style = "background-color:green";
+			}
+			if (matrice[r + 1][c - 1] == 0) {
+				id = ((r + 1) * lato) + c - 1;
+				document.getElementById(id).style = "background-color:green";
+			}
+			else if (matrice[r + 1][c - 1] == 2 && matrice[r + 2][c - 2] == 0) {
+				id = ((r + 2) * lato) + c - 2;
+				document.getElementById(id).style = "background-color:green";
+			}
+		}
+		else if (giocatore == 2) {
+			if (matrice[r - 1][c + 1] == 0) {
+				id = ((r - 1) * lato) + c + 1;
+				document.getElementById(id).style = "background-color:green";
+			}
+			else if (matrice[r - 1][c + 1] == 1 && matrice[r - 2][c + 2] == 0) {
+				id = ((r - 2) * lato) + c + 2;
+				document.getElementById(id).style = "background-color:green";
+			}
+			if (matrice[r - 1][c - 1] == 0) {
+				id = ((r - 1) * lato) + c - 1;
+				document.getElementById(id).style = "background-color:green";
+			}
+			else if (matrice[r - 1][c - 1] == 1 && matrice[r - 2][c - 2] == 0) {
+				id = ((r - 2) * lato) + c - 2;
+				document.getElementById(id).style = "background-color:green";
+			}
+		}
+	}
+
+
 }
 
 
