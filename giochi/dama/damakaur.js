@@ -195,7 +195,7 @@ function GiocoDama() {
 						if (controllaSePossibiliMossePedinaGiocatore2(r, c, giocatore) == true) return true;
 					}
 				} else if (matrice[r][c] == giocatore + 2)
-					controllaSePossibiliMosseDama(r, c, giocatore);
+					if (controllaSePossibiliMosseDama(r, c, giocatore) == true) return true;
 			}
 		}
 		return false;

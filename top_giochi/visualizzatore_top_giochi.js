@@ -17,7 +17,7 @@ function GiochiPiuGiocati(idContenitore) {
         "giochi/2048/2048.html",
         "giochi/campo minato/campominato.html",
         "giochi/snake/snake.html",
-        "giochi/snake/damakaur.html"
+        "giochi/dama/damakaur.html"
     ];
     let posImgCorrente = 0;
     let timeId;
