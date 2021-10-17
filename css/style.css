@@ -74,3 +74,24 @@ button {
 #areaCentralePagina {
     margin-bottom: 200px;
 }
+
+/* .alert {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #ff5252;
+} */
+/* #row-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    margin: 10px;
+    width: 100%;
+} */
+#vittoria-sconfitta {
+    text-align: center;
+    /* width: 100%; */
+    /* margin: 50px; */
+}
