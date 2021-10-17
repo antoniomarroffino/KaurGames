@@ -202,15 +202,14 @@ function Gioco15() {
 }
 
 function crea() {
-    document.getElementsByTagName("body")[0].innerHTML += '<div class="container text-center my-5 titolo">' +
+    document.getElementById("areaCentralePagina").innerHTML = '<div id="titoloGiocoSchermataIniziale" class="container text-center my-5 titolo">' +
         '1 2 2 GIOCO DEL QUINDICI 2 2 9' +
         '</div>';
     creaScheletro();
-
 }
 
 function creaScheletro() {
-    document.getElementsByTagName("body")[0].innerHTML +=
+    document.getElementById("areaCentralePagina").innerHTML +=
         '<div class="container-fluid" id="container">' +
         '<div class="row" id="row-2">' +
         '<div class="col-md-3" id="box-1">' +
@@ -234,7 +233,7 @@ function creaScheletro() {
 }
 
 function gioca() {
-    document.getElementsByTagName("div")[1].remove();
+    document.getElementById("titoloGiocoSchermataIniziale").remove();
     start();
 }
 

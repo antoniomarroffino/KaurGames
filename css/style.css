@@ -69,3 +69,8 @@ button {
 .active {
     background-color: grey;
 }
+
+
+#areaCentralePagina {
+    margin-bottom: 200px;
+}

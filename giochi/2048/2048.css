@@ -74,9 +74,9 @@ td {
         font-size: 35px;
     }
     25% {
-        width: 100px; 
+        width: 110px; 
         background-color: yellow;
-        height: 100px;
+        height: 110px;
         font-size: 45px;
         /* margin-top: -5px;
         margin-left: -5px; */
@@ -158,7 +158,8 @@ button {
     text-align: center;
     border-radius: 8px;
     padding: 1px 12px;
-    font-family: "Comic Sans MS";
+    /* font-family: "Comic Sans MS"; */
+    font-family: Arial;
     font-weight: bold;
     border-color: rgb(51, 51, 51);
 }
@@ -168,9 +169,9 @@ button:hover {
 }
 
 #box-1 {
+    order: 1;
     display: flex;
     justify-content: center;
-    order: 1;
     flex-direction: column;
 }
 
@@ -187,7 +188,7 @@ button:hover {
     justify-content: center;
     flex-direction: column;
     visibility: hidden;
-    width: 200px;
+    /* width: 200px; */
     height: 100%;
     background-color: transparent;
     border: transparent;
@@ -208,7 +209,7 @@ button:hover {
     border-right: 10px solid rgb(117, 137, 155);
     border-bottom: 10px solid rgb(100, 115, 129);
     border-collapse: separate;
-    width: 300px;
+    /* width: 300px; */
 }
 
 

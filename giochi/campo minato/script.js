@@ -346,7 +346,8 @@ function gioca() {
     var strNormal = "normale";
     var strHard = "difficile";
 
-    document.getElementsByTagName("div")[1].remove();
+    // document.getElementsByTagName("div")[1].remove();
+    document.getElementById("titoloGiocoSchermataIniziale").remove();
 
     document.getElementById("bottone-gioca").style.display = 'none';
     document.getElementById("bottone-gioca").style.visibility = "hidden";
@@ -434,7 +435,7 @@ function rigioca() {
 }
 
 function crea() {
-    document.getElementsByTagName("body")[0].innerHTML += '<div class="container text-center my-5 titolo">' +
+    document.getElementById("areaCentralePagina").innerHTML = '<div id="titoloGiocoSchermataIniziale" class="container text-center my-5 titolo">' +
         '1 2 2 CAMPO 2 MINATO 2 2 9' +
         '</div>';
     creaScheletro();
@@ -442,7 +443,7 @@ function crea() {
 }
 
 function creaScheletro() {
-    document.getElementsByTagName("body")[0].innerHTML +=
+    document.getElementById("areaCentralePagina").innerHTML +=
         '<div class="container-fluid" id="container">' +
         '<div class="row" id="row-2">' +
         '<div class="col-md-3" id="box-1">' +
