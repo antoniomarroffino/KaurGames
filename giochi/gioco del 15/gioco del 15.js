@@ -209,26 +209,55 @@ function crea() {
 }
 
 function creaScheletro() {
-    document.getElementById("areaCentralePagina").innerHTML +=
-        '<div class="container-fluid" id="container">' +
-        '<div class="row" id="row-2">' +
-        '<div class="col-md-3" id="box-1">' +
+    // document.getElementById("areaCentralePagina").innerHTML +=
+        // '<div class="container-fluid" id="container">' +
+        // '<div class="row" id="row-2">' +
+        // '<div class="col-md-3" id="box-1">' +
+        // '</div>' +
+        // // '<div class="col-md-6" id="box-2">' +
+        // '<div class="col-md-6" id="box-2"><div id="tabellaGioco"></div>' +
+        // // '<div class="col-md-6" id="tabellaGioco">' +
+        // '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
+        // '</div>' +
+        // '<div class="col-3 alert alert-secondary" id="box-3">' +
+        // '<div id="box-3-tempoTrascorso">' +
+        // '</div>' +
+        // '<div id="box-3-mosseEffettuate">' +
+        // '</div>' +
+        // '</div>' +
+        // '</div>' +
+        // '<div class="row" id="row-3">' +
+        // '</div>';
+        document.getElementById("areaCentralePagina").innerHTML +=
+        '<div class="container" id="container">' +
+
+
+        '<div class="row text-center" id="row-3">' +
         '</div>' +
-        // '<div class="col-md-6" id="box-2">' +
-        '<div class="col-md-6" id="box-2"><div id="tabellaGioco"></div>' +
-        // '<div class="col-md-6" id="tabellaGioco">' +
+
+
+        '<div class="row justify-content-between" id="row-2">' +
+
+        '<div class="col-lg-3 align-self-center order-1  d-flex justify-content-center flex-wrap" id="box-1">' +
+        '</div>' +
+
+        '<div class="col-lg-auto d-flex justify-content-center order-2" id="box-2">' +
+        '<div id="tabellaGioco"></div>' +
         '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
         '</div>' +
-        '<div class="col-3 alert alert-secondary" id="box-3">' +
-        // '<div id="box-3-modalità">' +
-        // '</div>' +
+
+        '<div class="col-lg-3 align-self-center order-3" id="box-3">' +
+        '<div id="box-3-puntiOttenuti">' +
+        '</div>' +
         '<div id="box-3-tempoTrascorso">' +
         '</div>' +
         '<div id="box-3-mosseEffettuate">' +
         '</div>' +
         '</div>' +
+
         '</div>' +
-        '<div class="row" id="row-3">' +
+
+
         '</div>';
 }
 
@@ -242,6 +271,7 @@ function start() {
     document.getElementById("bottone-gioca").style.visibility = "hidden";
 
     document.getElementById("box-3").style.visibility = "visible";
+    document.getElementById("tabellaGioco").style.visibility = "visible";
     gioco.mosseEffettuate = 0;
     document.getElementById("box-3-mosseEffettuate").innerHTML = `<strong>Mosse effettuate: </strong>${gioco.mosseEffettuate}`;
 

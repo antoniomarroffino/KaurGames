@@ -1,6 +1,6 @@
 var g1, g2;
 var tris = new Object();
-tris.creaTabella = function(classe) {
+tris.creaTabella = function (classe) {
     tris.rigioca = false;
     tris.righe = 3;
     tris.colonne = 3;
@@ -34,56 +34,56 @@ tris.creaTabella = function(classe) {
     document.getElementById('box-2').innerHTML += str;
 }
 
-tris.settings = function() {
+tris.settings = function () {
     document.getElementById("box-3").style.visibility = "visible";
     document.getElementById("box-3-modalità").innerHTML = "<strong>Modalità:</strong> " + tris.modalita;
     if (tris.modalita == "1 VS 1") {
         if (tris.giocatore1 == 'x')
             document.getElementById("row-3").innerHTML = '<div class="row alert alert-dark">' +
-            '<div class="testoAlCentro" class="col">' +
-            'Giocatore 1:' +
-            '<div style="padding:10px" class="opzione">' +
-            '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/x.png""></img>' +
-            '</div>' +
-            '</div>' +
-            '<div class="testoAlCentro" class="col">' +
-            'Giocatore 2:' +
-            '<div style="padding:10px" class="opzione">' +
-            '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/o.png"></img>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+                '<div class="testoAlCentro" class="col">' +
+                'Giocatore 1:' +
+                '<div style="padding:10px" class="opzione">' +
+                '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/x.png""></img>' +
+                '</div>' +
+                '</div>' +
+                '<div class="testoAlCentro" class="col">' +
+                'Giocatore 2:' +
+                '<div style="padding:10px" class="opzione">' +
+                '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/o.png"></img>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         else
             document.getElementById("row-3").innerHTML = '<div class="row alert alert-dark">' +
-            '<div class="testoAlCentro" class="col">' +
-            'Giocatore 1:' +
-            '<div style="padding:10px" class="opzione">' +
-            '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/o.png""></img>' +
-            '</div>' +
-            '</div>' +
-            '<div class="testoAlCentro" class="col">' +
-            'Giocatore 2:' +
-            '<div style="padding:10px" class="opzione">' +
-            '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/x.png"></img>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+                '<div class="testoAlCentro" class="col">' +
+                'Giocatore 1:' +
+                '<div style="padding:10px" class="opzione">' +
+                '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/o.png""></img>' +
+                '</div>' +
+                '</div>' +
+                '<div class="testoAlCentro" class="col">' +
+                'Giocatore 2:' +
+                '<div style="padding:10px" class="opzione">' +
+                '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/x.png"></img>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
     } else {
         if (tris.giocatore1 == 'x')
             document.getElementById("row-3").innerHTML = '<div class="row alert alert-dark">' +
-            '<div class="testoAlCentro" class="col">' +
-            'Tu:' +
-            '<div style="padding:10px" class="opzione">' +
-            '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/x.png""></img>' +
-            '</div>' +
-            '</div>' +
-            '<div class="testoAlCentro" class="col">' +
-            'CPU:' +
-            '<div style="padding:10px" class="opzione">' +
-            '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/o.png"></img>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+                '<div class="testoAlCentro" class="col">' +
+                'Tu:' +
+                '<div style="padding:10px" class="opzione">' +
+                '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/x.png""></img>' +
+                '</div>' +
+                '</div>' +
+                '<div class="testoAlCentro" class="col">' +
+                'CPU:' +
+                '<div style="padding:10px" class="opzione">' +
+                '<img style="padding:2px; height:50px; width:50px" class="img" src="immagini/o.png"></img>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         else document.getElementById("row-3").innerHTML = '<div class="row alert alert-dark">' +
             '<div class="testoAlCentro" class="col">' +
             'Tu:' +
@@ -101,7 +101,7 @@ tris.settings = function() {
     }
 }
 
-tris.assegna = function(casella) {
+tris.assegna = function (casella) {
     var r = parseInt(casella.id / 3);
     var c = casella.id % 3;
 
@@ -124,7 +124,7 @@ tris.assegna = function(casella) {
     }
 }
 
-tris.controlla = function() { //controllo se qualcuno ha vinto
+tris.controlla = function () { //controllo se qualcuno ha vinto
     if (tris.matrice[0][0] == 'x' && tris.matrice[0][1] == 'x' && tris.matrice[0][2] == 'x' || tris.matrice[0][0] == 'o' && tris.matrice[0][1] == 'o' && tris.matrice[0][2] == 'o') {
         if (tris.matrice[0][0] != 0) {
             tris.segnaVittoria(0, 0, 0, 1, 0, 2);
@@ -200,7 +200,7 @@ tris.controlla = function() { //controllo se qualcuno ha vinto
     return 2;
 }
 
-tris.segnaVittoria = function(r1, c1, r2, c2, r3, c3) {
+tris.segnaVittoria = function (r1, c1, r2, c2, r3, c3) {
     document.getElementById(r1 * tris.righe + c1).style.backgroundColor = "red";
     document.getElementById(r2 * tris.righe + c2).style.backgroundColor = "red";
     document.getElementById(r3 * tris.righe + c3).style.backgroundColor = "red";
@@ -208,7 +208,7 @@ tris.segnaVittoria = function(r1, c1, r2, c2, r3, c3) {
     togliOnClick();
 }
 
-tris.mossaCPU = function() {
+tris.mossaCPU = function () {
     var r, c, caso, n;
 
     if (tris.mossa == 1) {
@@ -1168,7 +1168,7 @@ tris.mossaCPU = function() {
     tris.mossa++;
 }
 
-tris.probabilita = function() {
+tris.probabilita = function () {
     var n = Math.floor(Math.random() * 100);
     if (tris.modalita == "difficile")
         if (n < 95)
@@ -1187,7 +1187,7 @@ tris.probabilita = function() {
             return false;
 }
 
-tris.controllaMatricePiena = function() {
+tris.controllaMatricePiena = function () {
     var cont = 0;
     for (var r = 0; r < tris.righe; r++) {
         for (var c = 0; c < tris.colonne; c++) {
@@ -1206,14 +1206,14 @@ tris.controllaMatricePiena = function() {
 
 }
 
-tris.cambiaSegno = function() {
+tris.cambiaSegno = function () {
     if (tris.segno == "x")
         tris.segno = "o";
     else
         tris.segno = "x";
 }
 
-tris.chiDeveIniziare = function() {
+tris.chiDeveIniziare = function () {
     if (tris.iniziaGiocatore1) { //se 0 inizia g1   se 1 inizia cpu o avversario(g2)
         if (tris.modalita != "1 VS 1") {
             tris.mossaCPU(); //g1 o   g2(CPU) x
@@ -1403,20 +1403,46 @@ function crea() {
 }
 
 function creaScheletro() {
+    // document.getElementById("areaCentralePagina").innerHTML +=
+    //     '<div class="container-fluid" id="container">' +
+    //     '<div class="row" id="row-2">' +
+    //     '<div class="col-md-3" id="box-1">' +
+    //     '</div>' +
+    //     '<div class="col-md-6" id="box-2">' +
+    //     '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
+    //     '</div>' +
+    //     '<div class="col-3 alert alert-secondary" id="box-3">' +
+    //     '<div id="box-3-modalità">' +
+    //     '</div>' +
+    //     '</div>' +
+    //     '</div>' +
+    //     '<div class="row" id="row-3">' +
+    //     '</div>' +
+    //     '</div>';
     document.getElementById("areaCentralePagina").innerHTML +=
-        '<div class="container-fluid" id="container">' +
-        '<div class="row" id="row-2">' +
-        '<div class="col-md-3" id="box-1">' +
+        '<div class="container" id="container">' +
+
+
+        '<div class="row text-center" id="row-3">' +
         '</div>' +
-        '<div class="col-md-6" id="box-2">' +
+
+
+        '<div class="row justify-content-between" id="row-2">' +
+
+        '<div class="col-lg-3 align-self-center order-1  d-flex justify-content-center flex-wrap" id="box-1">' +
+        '</div>' +
+
+        '<div class="col-lg-6 d-flex justify-content-center order-2" id="box-2">' +
         '<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
         '</div>' +
-        '<div class="col-3 alert alert-secondary" id="box-3">' +
+
+        '<div class="col-lg-3 align-self-center order-3" id="box-3">' +
         '<div id="box-3-modalità">' +
         '</div>' +
         '</div>' +
+
         '</div>' +
-        '<div class="row" id="row-3">' +
-        '</div>' +
+
+
         '</div>';
 }

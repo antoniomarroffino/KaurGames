@@ -47,35 +47,53 @@ td:hover {
     border-collapse: collapse;
 }
 
-#bottone-gioca {
+/*  */
+/* #bottone-gioca {
     font-size: 4.0em;
     width: 300px;
     height: 100px;
 }
-
 button {
     color: rgb(169, 198, 223);
     background-color: rgb(218, 218, 218);
     text-align: center;
     border-radius: 8px;
     padding: 1px 12px;
-    /* font-family: "Comic Sans MS"; */
     font-family: "Arial";
     font-weight: bold;
     border-color: rgb(51, 51, 51);
 }
-
 button:hover {
     background-color: gray;
+} */
+/* #bottone-tornaAlMenù,
+#bottone-rigioca,
+#bottone-gioca {
+    width: 300px;
+    height: auto;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
 }
 
-#box-1 {
+.bottone-menù {
+    display: flex;
+    font-size: xx-large;
+    padding: 30px;
+} */
+
+
+/* VECCHIA STRUTTURA */
+/* #box-1 {
     order: 1;
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
-
 #box-2 {
     order: 2;
     display: flex;
@@ -83,18 +101,29 @@ button:hover {
     align-items: center;
     flex-direction: column;
 }
-
 #box-3 {
     order: 3;
     display: flex;
     justify-content: center;
     flex-direction: column;
     visibility: hidden;
-    /* width: 200px; */
     height: 100%;
     background-color: transparent;
     border: transparent;
+} */
+/* #row-2 {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding: 50px;
 }
+#row-3 {
+    display: flex;
+    justify-content: center;
+} */
+/* #container {
+    justify-content: center;
+} */
 
 #bottone-facile,
 #bottone-normale,
@@ -114,13 +143,11 @@ button:hover {
     width: 50px;
     font-size: x-large;
 }
-
 .normale {
     height: 40px;
     width: 40px;
     font-size: large;
 }
-
 .difficile {
     height: 30px;
     width: 30px;
@@ -138,17 +165,7 @@ button:hover {
     height: 300px;
 }
 
-#row-2 {
-    display: flex;
-    justify-content: center;
-    padding-top: 50px;
-    padding: 50px;
-}
 
-#row-3 {
-    display: flex;
-    justify-content: center;
-}
 
 #name {
     font-size: x-large;
@@ -169,29 +186,8 @@ button:hover {
     align-items: center;
 }
 
-#container {
-    justify-content: center;
-}
 
-#bottone-tornaAlMenù,
-#bottone-rigioca,
-#bottone-gioca {
-    width: 300px;
-    height: auto;
-    border-radius: 2%;
-    box-shadow: 6px 6px 20px #353535;
-    border-spacing: 5px;
-    border-top: 6px solid rgb(163, 179, 197);
-    border-left: 6px solid rgb(125, 146, 167);
-    border-right: 10px solid rgb(117, 137, 155);
-    border-bottom: 10px solid rgb(100, 115, 129);
-}
 
-.bottone-menù {
-    display: flex;
-    font-size: xx-large;
-    padding: 30px;
-}
 
 #box-3-modalità,
 #box-3-numeroMine,
@@ -229,7 +225,6 @@ button:hover {
     height: auto;
     background-color: aliceblue;
 }
-
 #box-3-onOff:hover {
     background-color: grey;
 }
@@ -242,7 +237,6 @@ button:hover {
 .scrittaRossa {
     color: red;
 }
-
 .scrittaBianca {
     color: white;
 }
@@ -263,4 +257,17 @@ button:hover {
     border-right: 10px solid rgb(117, 137, 155);
     border-bottom: 10px solid rgb(100, 115, 129);
     border-collapse: separate;
+    margin-bottom: 15px;
+}
+
+/* STRUTTURA PAGINA */
+#box-3 {
+    visibility: hidden;
+}
+#box-1, #box-2, #box-3 {
+    /* border: 1px solid black; */
+    margin-bottom: 20px;
+}
+#container {
+    margin-top: 50px;
 }

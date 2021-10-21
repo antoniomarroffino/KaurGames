@@ -527,22 +527,47 @@ function crea() {
 }
 
 function creaScheletro() {
+	// document.getElementById("areaCentralePagina").innerHTML +=
+	// 	'<div class="container-fluid" id="container">' +
+	// 	'<div class="row" id="row-2">' +
+	// 	'<div class="col-md-3" id="box-1">' +
+	// 	'</div>' +
+	// 	'<div class="col-md-6" id="box-2"><div id="giocodama"></div>' +
+	// 	'<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
+	// 	'</div>' +
+	// 	'<div class="col-3 alert alert-secondary" id="box-3">' +
+	// 	'<div id="box-3-tempoTrascorso">' +
+	// 	'</div>' +
+	// 	'</div>' +
+	// 	'</div>' +
+	// 	'<div class="row" id="row-3">' +
+	// 	'</div>';
 	document.getElementById("areaCentralePagina").innerHTML +=
-		'<div class="container-fluid" id="container">' +
-		'<div class="row" id="row-2">' +
-		'<div class="col-md-3" id="box-1">' +
+		'<div class="container" id="container">' +
+
+
+		'<div class="row text-center" id="row-3">' +
 		'</div>' +
-		'<div class="col-md-6" id="box-2"><div id="giocodama"></div>' +
+
+
+		'<div class="row justify-content-between" id="row-2">' +
+
+		'<div class="col-lg-3 align-self-center order-1  d-flex justify-content-center flex-wrap" id="box-1">' +
+		'</div>' +
+
+		'<div class="col-lg-auto d-flex justify-content-center order-2" id="box-2">' +
+		'<div id="giocodama"></div>' +
 		'<button id="bottone-gioca" onclick="gioca()">GIOCA</button>' +
 		'</div>' +
-		'<div class="col-3 alert alert-secondary" id="box-3">' +
+
+		'<div class="col-lg-3 align-self-center order-3" id="box-3">' +
 		'<div id="box-3-tempoTrascorso">' +
 		'</div>' +
-		// '<div id="box-3-numeroMine">' +
-		// '</div>' +
 		'</div>' +
+
 		'</div>' +
-		'<div class="row" id="row-3">' +
+
+
 		'</div>';
 }
 

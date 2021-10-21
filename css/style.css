@@ -72,26 +72,72 @@ button {
 
 
 #areaCentralePagina {
-    margin-bottom: 200px;
+    margin-bottom: 250px;
 }
 
-/* .alert {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    text-align: center;
-    border: 1px solid #ff5252;
-} */
-/* #row-3 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-    margin: 10px;
-    width: 100%;
-} */
+/* TEST */
 #vittoria-sconfitta {
     text-align: center;
     /* width: 100%; */
     /* margin: 50px; */
 }
+
+
+
+
+/* Elementi comuni pagine giochi */
+#bottone-gioca {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.0em;
+    width: 300px;
+    height: 100px;
+}
+
+button {
+    /* color: rgb(169, 198, 223); */
+    color: rgb(33, 37, 41);
+    /* background-color: rgb(218, 218, 218); */
+    background-color: rgb(168, 197, 221);
+    text-align: center;
+    border-radius: 8px;
+    padding: 1px 12px;
+    /* font-family: "Comic Sans MS"; */
+    font-family: Arial;
+    font-weight: bold;
+    border-color: rgb(51, 51, 51);
+    transition: background-color 0.7s;
+}
+button:hover {
+    background-color: rgb(110, 127, 141);
+    transition: 0.3s;
+}
+button:active {
+    background-color: rgb(80, 89, 97);
+}
+
+#bottone-tornaAlMenù,
+#bottone-rigioca,
+#bottone-gioca {
+    /* width: 300px; */
+    height: auto;
+    padding: 8px;
+    border-radius: 2%;
+    box-shadow: 6px 6px 20px #353535;
+    border-spacing: 5px;
+    border-top: 6px solid rgb(163, 179, 197);
+    border-left: 6px solid rgb(125, 146, 167);
+    border-right: 10px solid rgb(117, 137, 155);
+    border-bottom: 10px solid rgb(100, 115, 129);
+    margin: 8px;
+}
+#bottone-gioca {
+    height: 140px;
+}
+.bottone-menù {
+    /* display: flex; */
+    font-size: xx-large;
+    /* padding: 30px; */
+}
+
